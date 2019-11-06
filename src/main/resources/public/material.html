@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Astrea Shapes Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+
+    <!-- JS -->
+    <script src="static/js/jquery/jquery.min.js"></script>
+    <script src="static/js/bootstrap/bootstrap.min.js"></script>
+   
+    <!-- CSS  -->
+ 	<link rel="stylesheet" href="static/css/astrea.css">
+    <link rel="stylesheet" href="static/css/bootstrap/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="static/css/jquery/jquery-ui.css">
+
+    <!-- custom js for main-->
+    <script src="/static/js/astrea.js"></script>
+
+</head>
+
+<body>
+
+<!-- Static navbar -->
+<nav class="navbar navbar-default ">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="static/logos/astrea.svg" class="img-responsive" width="30" height="30" alt="" style="margin-top:-10px"></a><!-- Source of the logo: https://commons.wikimedia.org/wiki/File:5_Astraea_Symbol.svg-->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="index.html">Main</a></li>
+                <li><a href="/swagger-ui.html">API REST</a></li>
+                <li><a href="catalogue.html">Shapes catalogue</a></li>
+                <li class="active"><a href="material.html">Material</a></li>
+                <li><a href="https://github.com/oeg-upm/Astrea" class="navbar-brand pull-sm-right m-r-0"><i class="fa fa-github"></i> Github</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>
+
+
+
+
+<main role="main">
+
+    <div class="container" >
+        <!-- Header section -->
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Aditional material to generate SHACL shapes</h2>
+            </div>  
+        </div>
+        <!-- Info section -->
+        <div class="row" id="mappings">
+            <div class="col-md-12 table-wrapper">
+                <h3 class="checkout-step-title">Mappings</h3>
+                <h4>The following table shows the mappings identified between the OWL constructs and SHACL constructs.
+                The tables includes the constructs and their associated type. For those cases where there are not mappings, the
+                cell will show the symbol &quot;-&quot;.</h4>
+                <!-- Table with mappings -->
+
+                <div class="panel-heading">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item" class="active"><a data-toggle="tab" href="#nav-home">OWL to SHACL Shapes  </a></li>
+                        <li class="nav-item"><a data-toggle="tab" href="#nav-profile">SHACL Shapes to OWL  </a></li>
+                    </ul>
+                </div>
+
+
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade in active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div style="overflow: auto; height: 600px">
+                            <table  class="table table-bordered" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>OWL Construct</th>
+                                        <th>OWL Construct TYPE</th>
+                                        <th>SHACL Construct</th>
+                                        <th>SHACL Construct TYPE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td >owl:equivalentProperty</td>
+                                        <td >(In)Equality</td>
+                                        <td >sh:equals</td>
+                                        <td >Property Pair Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:AllDifferent</td>
+                                        <td >(In)Equality</td>
+                                        <td >-</td>
+                                        <td >-</td>
+                                    </tr>
+                                    <tr>
+                                        <td > owl:differentFrom</td>
+                                        <td >(In)Equality</td>
+                                        <td >-</td>
+                                        <td >-</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:sameAs</td>
+                                        <td >(In)Equality</td>
+                                        <td >-</td>
+                                        <td >-</td>
+                                    </tr>
+                                    <tr>
+                                        <td >rdfs:comment</td>
+                                        <td >Annotation Properties</td>
+                                        <td >rdfs:label / sh:Description</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >rdfs:label</td>
+                                        <td >Annotation Properties</td>
+                                        <td >rdfs:label /sh:name</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >rdfs:seeAlso</td>
+                                        <td >Annotation Properties</td>
+                                        <td >rdfs:seeAlso</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >rdfs:isDefinedBy</td>
+                                        <td >Annotation Properties</td>
+                                        <td >rdfs:isDefinedBy</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:AnnotationProperty</td>
+                                        <td >Annotation Properties</td>
+                                        <td >-</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:OntologyProperty</td>
+                                        <td >Annotation Properties</td>
+                                        <td >-</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:complementOf</td>
+                                        <td >Boolean Combinations of Class Expressions</td>
+                                        <td >sh:not</td>
+                                        <td >Logical Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:unionOf</td>
+                                        <td >Boolean Combinations of Class Expressions</td>
+                                        <td >sh:or</td>
+                                        <td >Logical Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:qualifiedMin/MaxCardinality 1</td>
+                                        <td >Cardinality</td>
+                                        <td >sh:xone</td>
+                                        <td >Logical Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:qualifiedMinCardinality etc</td>
+                                        <td >Cardinality</td>
+                                        <td >sh:qualifiedMinCount etc</td>
+                                        <td >Shape-based (structural) Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:oneOf</td>
+                                        <td >Class Axioms</td>
+                                        <td >sh:in</td>
+                                        <td >Logical Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:disjointUnionOf</td>
+                                        <td >Class Axioms</td>
+                                        <td >sh:node/sh:or/sh:not</td>
+                                        <td >Logical Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:oneOf</td>
+                                        <td >Class Axioms</td>
+                                        <td >sh:in</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:intersectionOf</td>
+                                        <td >Class Intersection</td>
+                                        <td >sh:and</td>
+                                        <td >Logical Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:hasValue</td>
+                                        <td >Filler Information</td>
+                                        <td >sh:hasValue</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:hasKey</td>
+                                        <td >Keys</td>
+                                        <td >dash:uriStart</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:FunctionalProperty</td>
+                                        <td >Property Characteristics</td>
+                                        <td >sh:maxCount 1</td>
+                                        <td >Cardinality Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:InverseFunctionalProperty</td>
+                                        <td >Property Characteristics</td>
+                                        <td >sh:maxCount 1 on a sh:inversePath</td>
+                                        <td >Property Pair Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:inverseOf</td>
+                                        <td >Property Characteristics</td>
+                                        <td >sh:inversePath</td>
+                                        <td >Property Pair Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:ReflexiveProperty</td>
+                                        <td >Property Characteristics</td>
+                                        <td >sh:not/sh:disjoint in a node shape</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:IrreflexiveProperty</td>
+                                        <td >Property Characteristics</td>
+                                        <td >sh:disjoint in a node shape</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:SymmetricProperty</td>
+                                        <td >Property Characteristics</td>
+                                        <td >-</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:AsymmetricProperty</td>
+                                        <td >Property Characteristics</td>
+                                        <td >-</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:TransitiveProperty</td>
+                                        <td >Property Characteristics</td>
+                                        <td >sh:path with * operator</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:ObjectProperty</td>
+                                        <td >Property Characteristics</td>
+                                        <td >sh:PropertyShape</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:DatatypeProperty</td>
+                                        <td >Property Characteristics</td>
+                                        <td >sh:PropertyShape</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:allValuesFrom</td>
+                                        <td >Property Restrictions</td>
+                                        <td >sh:class or sh:datatype</td>
+                                        <td >Value Type Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:onDatatype/owl:withRestrictions/xsd:minExclusive etc</td>
+                                        <td >Property Restrictions</td>
+                                        <td >sh:minExclusive etc</td>
+                                        <td >Value Range Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:onDatatype/owl:withRestrictions/xsd:maxExclusive etc</td>
+                                        <td >Property Restrictions</td>
+                                        <td >sh:maxExclusive etc</td>
+                                        <td >Value Range Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:onDatatype/owl:withRestrictions/xsd:minInclusive etc</td>
+                                        <td >Property Restrictions</td>
+                                        <td >sh:minInclusive etc</td>
+                                        <td >Value Range Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:onDatatype/owl:withRestrictions/xsd:maxInclusive etc</td>
+                                        <td >Property Restrictions</td>
+                                        <td >sh:maxInclusive etc</td>
+                                        <td >Value Range Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:onDatatype/owl:withRestrictions/xsd:minLength</td>
+                                        <td >Property Restrictions</td>
+                                        <td >sh:minLength</td>
+                                        <td >String-based Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:onDatatype/owl:withRestrictions/xsd:maxLength</td>
+                                        <td >Property Restrictions</td>
+                                        <td >sh:maxLength</td>
+                                        <td >String-based Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:onDatatype/owl:withRestrictions/xsd:length</td>
+                                        <td >Property Restrictions</td>
+                                        <td >sh:minLength + sh:maxLength</td>
+                                        <td >String-based Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:onDatatype/owl:withRestrictions/xsd:pattern</td>
+                                        <td >Property Restrictions</td>
+                                        <td >sh:pattern</td>
+                                        <td >String-based Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:onDatatype/owl:withRestrictions/rdf:langRange</td>
+                                        <td >Property Restrictions</td>
+                                        <td >sh:languageIn</td>
+                                        <td >String-based Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:propertyDisjointWith, owl:AllDisjointProperties</td>
+                                        <td >Property Restrictions</td>
+                                        <td >sh:disjoint</td>
+                                        <td >Property Pair Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:propertyChainAxiom</td>
+                                        <td >Property Restrictions</td>
+                                        <td >sh:path</td>
+                                        <td >Property Pair Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:onProperty,</td>
+                                        <td >Property Restrictions</td>
+                                        <td >sh:path</td>
+                                        <td >Property Pair Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:someValuesFrom</td>
+                                        <td >Property Restrictions</td>
+                                        <td >sh:qualifiedMinCount 1 or dash:hasValueWithClass</td>
+                                        <td >Shape-based (structural) Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >rdfs:subPropertyOf</td>
+                                        <td >RDF Schema Features</td>
+                                        <td >dash:subSetOf</td>
+                                        <td >Property Pair Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >rdfs:subClassOf</td>
+                                        <td >RDF Schema Features</td>
+                                        <td >sh:node, sh:property</td>
+                                        <td >Shape-based (structural) Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:equivalentClass</td>
+                                        <td >RDF Schema Features</td>
+                                        <td >sh:node, sh:property</td>
+                                        <td >Shape-based (structural) Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >rdfs:domain</td>
+                                        <td >RDF Schema Features</td>
+                                        <td >-</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >rdfs:range</td>
+                                        <td >RDF Schema Features</td>
+                                        <td >sh:class / sh:datatype / sh:node</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >rdf:Property</td>
+                                        <td >RDF Schema Features</td>
+                                        <td >sh:PropertyShape</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >rdfs:Class</td>
+                                        <td >RDF Schema Features</td>
+                                        <td >sh:NodeShape</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >rdfs:Datatype</td>
+                                        <td >RDF Schema Features</td>
+                                        <td >sh:PropertyShape</td>
+                                        <td >Other Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:maxCardinality</td>
+                                        <td >Restricted Cardinality</td>
+                                        <td >sh:maxCount</td>
+                                        <td >Cardinality Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:minCardinality</td>
+                                        <td >Restricted Cardinality</td>
+                                        <td >sh:minCount</td>
+                                        <td >Cardinality Constraints</td>
+                                    </tr>
+                                    <tr>
+                                        <td >owl:cardinality</td>
+                                        <td >Restricted Cardinality</td>
+                                        <td >sh:minCount + sh:maxCount</td>
+                                        <td >Cardinality Constraints</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade in" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <div style="overflow: auto; height: 600px">
+                            <table  class="table table-bordered" cellspacing="0">
+                                <thead>
+                                    <th>SHACL construct</th>
+                                    <th>SHACL construct TYPE</th>
+                                    <th>OWL construct</th>
+                                    <th>OWL Construct TYPE</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td >sh:class </td>
+                                        <td>Value Type Constraints</td>
+                                        <td>owl:Class</td>
+                                        <td>RDF Schema Features</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td >sh:datatype</td>
+                                        <td>Value Type Constraints</td>
+                                        <td>owl:Datatype</td>
+                                        <td>Datatypes</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:nodeKind : sh:NodeKind: sh:BlankNode, sh:IRI, sh:Literal sh:BlankNodeOrIRI, sh:BlankNodeOrLiteral and sh:IRIOrLiteral.</td>
+                                        <td>Value Type Constraints</td>
+                                        <td>xsd:anyURI, xsd:string</td>
+                                        <td>Datatypes</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:maxCount</td>
+                                        <td>Cardinality Constraints</td>
+                                        <td>owl:maxCardinality</td>
+                                        <td>Restricted Cardinality</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:minCount</td>
+                                        <td>Cardinality Constraints</td>
+                                        <td>owl:minCardinality</td>
+                                        <td>Restricted Cardinality</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>sh:minExclusive</td>
+                                        <td>Cardinality Constraints</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:maxInclusive</td>
+                                        <td>Cardinality Constraints</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:maxLength </td>
+                                        <td> String-based Constraints</td>
+                                        <td>owl:onDatatype/owl:withRestrictions/xsd:maxLength</td>
+                                        <td>Property Restrictions</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:minLength</td>
+                                        <td> String-based Constraints</td>
+                                        <td>owl:onDatatype/owl:withRestrictions/xsd:minLength</td>
+                                        <td>Property Restrictions</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:pattern</td>
+                                        <td> String-based Constraints</td>
+                                        <td>owl:onDatatype/owl:withRestrictions/xsd:pattern</td>
+                                        <td>Property Restrictions</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:languageIn</td>
+                                        <td> String-based Constraints</td>
+                                        <td>owl:onDatatype/owl:withRestrictions/rdf:langRange</td>
+                                        <td>Property Restrictions</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:uniqueLang </td>
+                                        <td> String-based Constraints</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:equals </td>
+                                        <td>Property Pair Constraints</td>
+                                        <td>owl:EquivalentTo</td>
+                                        <td>(In)Equality</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:disjoint </td>
+                                        <td>Property Pair Constraints</td>
+                                        <td>owl:disjointWith</td>
+                                        <td>Class Axioms</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:lessThan </td>
+                                        <td>Property Pair Constraints</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:lessThanOrEquals </td>
+                                        <td>Property Pair Constraints</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:and </td>
+                                        <td>Logical Constraint Constraints</td>
+                                        <td>owl:intersectionOf</td>
+                                        <td>Boolean Combinations of Class Expressions</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:not </td>
+                                        <td>Logical Constraint Constraints</td>
+                                        <td>owl:complementOf	</td>
+                                        <td>Boolean Combinations of Class Expressions</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:or </td>
+                                        <td>Logical Constraint Constraints</td>
+                                        <td>owl:unionOf</td>
+                                        <td>Boolean Combinations of Class Expressions</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:xone </td>
+                                        <td>Logical Constraint Constraints</td>
+                                        <td>-</td>
+                                        <td>Cardinality</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:node</td>
+                                        <td>Shape-based Constraints</td>
+                                        <td>owl:Class</td>
+                                        <td>RDF Schema Features</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:property</td>
+                                        <td>Shape-based Constraints</td>
+                                        <td>rdfs:Property</td>
+                                        <td>RDF Schema Features</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:qualifiedMinCount</td>
+                                        <td>Shape-based Constraints</td>
+                                        <td>owl:qualifiedMinCardinality </td>
+                                        <td>Cardinality</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:qualifiedMaxCount</td>
+                                        <td>Shape-based Constraints</td>
+                                        <td>owl:qualifiedMaxCardinality </td>
+                                        <td>Cardinality</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:qualifiedValueShape</td>
+                                        <td>Shape-based Constraints</td>
+                                        <td>owl:qualifiedCardinality </td>
+                                        <td>Cardinality</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:ignoredProperties</td>
+                                        <td>Other Constraint</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:closed</td>
+                                        <td>Other Constraint</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:hasValue</td>
+                                        <td>Other Constraint</td>
+                                        <td>owl:hasValue</td>
+                                        <td>Filler Information</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:in</td>
+                                        <td>Other Constraint</td>
+                                        <td>owl:oneOf</td>
+                                        <td>Class Axioms</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:name </td>
+                                        <td>Non-Validating Property Shape Characteristics</td>
+                                        <td>rdfs:label</td>
+                                        <td>Annotation Properties</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:description</td>
+                                        <td>Non-Validating Property Shape Characteristics</td>
+                                        <td>rdfs:comment</td>
+                                        <td>Annotation Properties</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:order</td>
+                                        <td>Non-Validating Property Shape Characteristics</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:group</td>
+                                        <td>Non-Validating Property Shape Characteristics</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:defaultValue</td>
+                                        <td>Non-Validating Property Shape Characteristics</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:deactivated </td>
+                                        <td>Other Characteristics</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:message</td>
+                                        <td>Other Characteristics</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:severity</td>
+                                        <td>Other Characteristics</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>sh:closed </td>
+                                        <td>Other Characteristics</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                    </tr>
+                                    <tr>
+                                    </tr>
+                                    <tr>
+                                    </tr>
+                                    <tr>
+                                    </tr>
+                                    <tr>
+                                    </tr>
+                                    <tr>
+                                    </tr>
+                                    <tr>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="queries">
+            <div class="col-md-12 table-wrapper">
+                <h3 class="checkout-step-title">Queries</h3>
+                The following table shows the SPARQL queries generated based on the <a href="#mappings">mappings</a> which are used to extract the OWL information needed to generate SHACL Shapes.
+                </br>
+                <div style="overflow: auto; height: 600px">
+                <table cellspacing=0 border=1>
+                    <thead>
+                    <tr>
+                        <th>SHACL Construct</th>
+                        <th>SHACL Construct TYPE</th>
+                        <th>OWL Construct</th>
+                        <th>QUERY</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>sh:minCount</td>
+                        <td>Cardinality Constraints</td>
+                        <td>owl:minCardinality</td>
+                        <td><pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+
+            CONSTRUCT {
+                ?shapeUrl a sh:NodeShape ;
+                sh:property [
+                    a sh:PropertyShape;
+                    sh:path ?property;
+                    sh:minCount ?minCardinality ;
+                ]
+            }WHERE{
+                ?type a ?typeClassUrl .
+                VALUES ?typeClassUrl {owl:Class rdfs:Class}
+                ?type rdfs:subClassOf ?owlPropertyRestriction .
+                ?owlPropertyRestriction a owl:Restriction
+                OPTIONAL{ ?owlPropertyRestriction owl:onProperty ?property .}
+                OPTIONAL { ?owlPropertyRestriction owl:minCardinality ?minCardinality .}
+                FILTER (!isBlank(?type)) .
+                BIND ( URI(CONCAT(STR(?type),"Shape")) AS ?shapeUrl) .
+            }</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>sh:maxCount </td>
+                        <td>Cardinality Constraints</td>
+                        <td>owl:maxCardinality</td>
+                        <td><pre>
+                                        PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl a sh:NodeShape ;
+                sh:property [
+                    a sh:PropertyShape;
+                    sh:path ?property;
+                    sh:maxCount ?maxCardinality ;
+                ]
+            }WHERE{
+                ?type a ?typeClassUrl .
+                VALUES ?typeClassUrl {owl:Class rdfs:Class}
+                ?type rdfs:subClassOf ?owlPropertyRestriction .
+                ?owlPropertyRestriction a owl:Restriction
+                OPTIONAL{ ?owlPropertyRestriction owl:onProperty ?property .}
+                OPTIONAL { ?owlPropertyRestriction owl:maxCardinality ?maxCardinality . }
+                FILTER (!isBlank(?type)) .
+                BIND ( URI(CONCAT(STR(?type),"Shape")) AS ?shapeUrl) .
+            }</pre>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>sh:minExclusive ,sh:maxExclusive </td>
+                        <td>Cardinality Constraints</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>sh:minInclusive, sh:maxInclusive </td>
+                        <td>Cardinality Constraints</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                        <td>sh:and </td>
+                        <td>Logical Constraint Constraints</td>
+                        <td>owl:intersectionOf</td>
+                        <td><pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl a sh:NodeShape ;
+                sh:targetClass ?type ;
+                sh:and ?intersectedTypesList .
+                ?intersectedTypesListRest rdf:first ?intersectedTypesListHeadShape ;
+                rdf:rest ?intersectedTypesListTailShape .
+            }WHERE{
+                ?type a ?typeClassUrl .
+                VALUES ?typeClassUrl {owl:Class rdfs:Class} .
+                OPTIONAL { ?type owl:intersectionOf ?intersectedTypesList .
+                    ?intersectedTypesList rdf:rest* ?intersectedTypesListRest .
+                    ?intersectedTypesListRest rdf:first ?intersectedTypesListHead .
+                    ?intersectedTypesListRest rdf:rest ?intersectedTypesListTail .
+                    BIND ( IF ( ?intersectedTypesListHead != rdf:nil && !isBlank(?intersectedTypesListHead), URI(CONCAT(STR(?intersectedTypesListHead),"Shape")), ?intersectedTypesListHead ) AS ?intersectedTypesListHeadShape )
+                    BIND ( IF ( ?intersectedTypesListTail != rdf:nil && !isBlank(?intersectedTypesListTail), URI(CONCAT(STR(?intersectedTypesListTail),"Shape")), ?intersectedTypesListTail ) AS ?intersectedTypesListTailShape )
+                }
+                FILTER (!isBlank(?type)) .
+                BIND ( URI(CONCAT(STR(?type),"Shape")) AS ?shapeUrl) .
+            }</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>sh:not</td>
+                        <td>Logical Constraint Constraints</td>
+                        <td>owl:complementOf	</td>
+                        <td><pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl a sh:NodeShape ;
+                sh:targetClass ?type ..
+                ?shapeUrl sh:not ?complementTypesList .
+                ?complementTypesListRest rdf:first ?complementTypesListHeadShape ;
+                rdf:rest ?complementTypesListTailShape .
+            }WHERE{
+                ?type a ?typeClassUrl .
+                VALUES ?typeClassUrl {owl:Class rdfs:Class} .
+                OPTIONAL {
+                    ?type owl:complementOf ?complementTypesList .
+                    ?complementTypesList rdf:rest* ?complementTypesListRest .
+                    ?complementTypesListRest rdf:first ?complementTypesListHead .
+                    ?complementTypesListRest rdf:rest ?complementTypesListTail .
+                    BIND ( IF ( ?complementTypesListHead != rdf:nil && !isBlank(?complementTypesListHead), URI(CONCAT(STR(?complementTypesListHead),\"Shape\")), ?complementTypesListHead ) AS ?complementTypesListHeadShape )
+                    BIND ( IF ( ?complementTypesListTail != rdf:nil && !isBlank(?complementTypesListTail), URI(CONCAT(STR(?complementTypesListTail),\"Shape\")), ?complementTypesListTail ) AS ?complementTypesListTailShape )
+                    FILTER (!isBlank(?type)) .
+                    BIND ( URI(CONCAT(STR(?type),"Shape")) AS ?shapeUrl) .
+                }
+                FILTER (!isBlank(?type)) .
+                BIND ( URI(CONCAT(STR(?type),"Shape")) AS ?shapeUrl) .
+            }</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>sh:or </td>
+                        <td>Logical Constraint Constraints</td>
+                        <td>owl:unionOf</td>
+                        <td><pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl sh:class ?typeInRange ;
+                sh:nodeKind sh:BlankNodeOrIRI .
+            }WHERE {
+                ?property a ?propertyType .
+                VALUES ?propertyType {owl:ObjectProperty rdf:Property}
+                OPTIONAL { ?property rdfs:range ?typeInRangeBlank .
+                    ?typeInRangeBlank owl:unionOf ?typeInRange .
+                }
+                FILTER (!isBlank(?property)) .
+                FILTER (!isBlank(?typeInRange)) .
+                BIND ( URI(CONCAT(STR(?property),"-Shape")) AS ?shapeUrl) .
+            }</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>sh:xone </td>
+                        <td>Logical Constraint Constraints</td>
+                        <td>owl:qualifiedMin/MaxCardinality 1</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>sh:name </td>
+                        <td>Non-Validating Property Shape Characteristics</td>
+                        <td>rdfs:label</td>
+                        <td>    <pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl a sh:NodeShape ;
+                sh:targetClass ?type;
+                sh:name ?shapeNodeName;
+            } WHERE{
+                ?type a owl:Class .
+                OPTIONAL { ?type rdfs:label ?shapeNodeName . }
+                FILTER (!isBlank(?type)) .
+                BIND ( URI(CONCAT(STR(?type),"Shape")) AS ?shapeUrl) .
+            }</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>sh:description</td>
+                        <td>Non-Validating Property Shape Characteristics</td>
+                        <td>rdfs:comment</td>
+                        <td>  <pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl a sh:NodeShape ;
+                sh:targetClass ?type;
+                sh:description ?shapeNodeName;
+            } WHERE{
+                ?type a owl:Class .
+                OPTIONAL { ?type rdfs:comment ?shapeNodeComment .}
+                FILTER (!isBlank(?type)) .
+                BIND ( URI(CONCAT(STR(?type),"Shape")) AS ?shapeUrl) .
+            }</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>sh:order</td>
+                        <td>Non-Validating Property Shape Characteristics</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>sh:group</td>
+                        <td>Non-Validating Property Shape Characteristics</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>sh:defaultValue</td>
+                        <td>Non-Validating Property Shape Characteristics</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>sh:deactivated </td>
+                        <td>Other Characteristics</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>sh:message </td>
+                        <td>Other Characteristics</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>sh:severity </td>
+                        <td>Other Characteristics</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>sh:closed </td>
+                        <td>Other Characteristics</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>sh:closed, sh:ignoredProperties</td>
+                        <td>Other Constraint</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>sh:hasValue</td>
+                        <td>Other Constraint</td>
+                        <td>owl:hasValue</td>
+                        <td><pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl a sh:NodeShape ;
+                sh:property [
+                    a sh:PropertyShape;
+                    sh:path ?property;
+                    sh:hasValue ?hasValue ;
+                ]
+            }WHERE{
+                ?type a ?typeClassUrl .
+                VALUES ?typeClassUrl {owl:Class rdfs:Class} .
+                OPTIONAL { ?owlPropertyRestriction owl:hasValue ?hasValue .}
+                FILTER (!isBlank(?type)) .
+                BIND ( URI(CONCAT(STR(?type),"Shape")) AS ?shapeUrl) .
+            }	</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>sh:in</td>
+                        <td>Other Constraint</td>
+                        <td>owl:oneOf</td>
+                        <td><pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl a sh:NodeShape ;
+                sh:targetClass ?type ;
+                ?shapeUrl sh:in ?inclusionTypesList .
+                ?inclusionTypesListRest rdf:first ?inclusionTypesListHeadShape ;
+                rdf:rest ?inclusionTypesListTailShape .
+            }WHERE{
+                ?type a ?typeClassUrl .
+                VALUES ?typeClassUrl {owl:Class rdfs:Class} .
+                OPTIONAL { ?type owl:oneOf ?inclusionTypesList .
+                    ?inclusionTypesList rdf:rest* ?inclusionTypesListRest .
+                    ?inclusionTypesListRest rdf:first ?inclusionTypesListHead .
+                    ?inclusionTypesListRest rdf:rest ?inclusionTypesListTail .
+                }
+                BIND ( IF ( ?inclusionTypesListHead != rdf:nil && !isBlank(?inclusionTypesListHead), URI(CONCAT(STR(?inclusionTypesListHead),"Shape")), ?inclusionTypesListHead ) AS ?inclusionTypesListHeadShape )
+                BIND ( IF ( ?inclusionTypesListTail != rdf:nil && !isBlank(?inclusionTypesListTail), URI(CONCAT(STR(?inclusionTypesListTail),"Shape")), ?inclusionTypesListTail ) AS ?inclusionTypesListTailShape )
+                FILTER (!isBlank(?type)) .
+                BIND ( URI(CONCAT(STR(?type),"Shape")) AS ?shapeUrl) .
+            }</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>sh:equals</td>
+                        <td>Property Pair Constraints</td>
+                        <td>owl:EquivalentTo</td>
+                        <td> <pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl a sh:NodeShape ;
+                sh:targetClass ?type .
+                ?shapeUrl sh:equals ?sameAsType .
+            }WHERE{
+                ?type a ?typeClassUrl .
+                VALUES ?typeClassUrl {owl:Class rdfs:Class} .
+                OPTIONAL { ?type owl:equivalentClass ?sameAsType . }
+                BIND ( URI(CONCAT(STR(?type),"Shape")) AS ?shapeUrl) .
+            }
+                        </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>sh:disjoint</td>
+                        <td>Property Pair Constraints</td>
+                        <td>owl:disjointWith</td>
+                        <td><pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl a sh:NodeShape ;
+                sh:targetClass ?type .
+                ?shapeUrl sh:disjoint ?disjointType .
+            }WHERE{
+                ?type a ?typeClassUrl .
+                VALUES ?typeClassUrl {owl:Class rdfs:Class} .
+                OPTIONAL { ?type owl:disjointWith ?disjointType . }
+                FILTER (!isBlank(?type)) .
+                BIND ( URI(CONCAT(STR(?type),"Shape")) AS ?shapeUrl) .
+            }</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>sh:lessThan </td>
+                        <td>Property Pair Constraints</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>sh:lessThanOrEquals </td>
+                        <td>Property Pair Constraints</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>sh:node</td>
+                        <td>Shape-based Constraints</td>
+                        <td>owl:Class</td>
+                        <td><pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl a sh:NodeShape ;
+                sh:targetClass ?type
+            } WHERE
+                ?type a owl:Class .
+                FILTER (!isBlank(?type)) .
+                BIND ( URI(CONCAT(STR(?type),"Shape")) AS ?shapeUrl) .
+            }
+                        </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>sh:property</td>
+                        <td>Shape-based Constraints</td>
+                        <td>rdfs:Property</td>
+                        <td><pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl a sh:NodeShape ;
+                sh:targetClass ?type;
+                sh:property [
+                    sh:path ?objectProperty;
+                    sh:class ?typeInRange ;
+                ]
+                            } WHERE{
+                ?type a owl:Class .
+                OPTIONAL {
+                    ?objectProperty a owl:ObjectProperty ;
+                    rdfs:domain ?type ;
+                    rdfs:range ?typeInRange .
+                }
+                FILTER (!isBlank(?type)) .
+                BIND ( URI(CONCAT(STR(?type),"Shape")) AS ?shapeUrl) .
+            }
+                        </pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>sh:qualifiedValueShape, sh:qualifiedMinCount, sh:qualifiedMaxCount </td>
+                        <td>Shape-based Constraints</td>
+                        <td>owl:qualifiedMinCardinality etc</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>sh:minLength</td>
+                        <td>String-based Constraints</td>
+                        <td>owl:onDatatype/owl:withRestrictions/xsd:length</td>
+                        <td><pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl sh:datatype ?typeInRange;
+                sh:class ?typeInRange ;
+                sh:minLength ?restrictionMin;
+             }WHERE{
+                OPTIONAL { ?property owl:withRestrictions ?restrictionsList .
+                    ?restrictionsList rdf:rest*/rdf:first ?restrictionElement .
+                    OPTIONAL { ?restrictionElement xsd:minLength ?restrictionMin . }
+                }
+                FILTER (!isBlank(?property)) .
+                BIND ( URI(CONCAT(STR(?property),"-Shape")) AS ?shapeUrl) .
+            }</pre>
+            </td>
+                    </tr>
+                    <tr>
+                        <td> sh:maxLength</td>
+                        <td>String-based Constraints</td>
+                        <td>owl:onDatatype/owl:withRestrictions/xsd:length</td>
+                        <td><pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl sh:datatype ?typeInRange;
+                sh:class ?typeInRange ;
+                sh:maxLength ?restrictionMax ;
+                }WHERE{
+                    OPTIONAL { ?property owl:withRestrictions ?restrictionsList .
+                    ?restrictionsList rdf:rest*/rdf:first ?restrictionElement .
+                    OPTIONAL { ?restrictionElement xsd:maxLength ?restrictionMax . }
+                }
+                FILTER (!isBlank(?property)) .
+                BIND ( URI(CONCAT(STR(?property),"-Shape")) AS ?shapeUrl) .
+            }</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>sh:pattern</td>
+                        <td>String-based Constraints</td>
+                        <td>owl:onDatatype/owl:withRestrictions/xsd:pattern</td>
+                        <td><pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl sh:datatype ?typeInRange;
+                sh:class ?typeInRange ;
+                sh:pattern ?restrictionPattern ;
+            }WHERE{
+                 OPTIONAL {
+                    OPTIONAL { ?property owl:withRestrictions ?restrictionsList .
+                    ?restrictionsList rdf:rest*/rdf:first ?restrictionElement .
+                    OPTIONAL { ?restrictionElement xsd:pattern ?restrictionPattern . }
+                }
+                FILTER (!isBlank(?property)) .
+                BIND ( URI(CONCAT(STR(?property),"-Shape")) AS ?shapeUrl) .
+            }</pre></td>
+    </tr>
+                    <tr>
+                        <td>sh:languageIn</td>
+                        <td>String-based Constraints</td>
+                        <td>owl:onDatatype/owl:withRestrictions/rdf:langRange</td>
+                        <td><pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl sh:datatype ?typeInRange;
+                sh:class ?typeInRange ;
+                sh:languageIn ?restrictionLang ;
+            }WHERE{
+                OPTIONAL {
+                    OPTIONAL { ?property owl:withRestrictions ?restrictionsList .
+                    ?restrictionsList rdf:rest*/rdf:first ?restrictionElement .
+                    OPTIONAL { ?restrictionElement rdf:langRange ?restrictionLang . }
+                }
+                FILTER (!isBlank(?property)) .
+                BIND ( URI(CONCAT(STR(?property),"-Shape")) AS ?shapeUrl) .
+            }</pre></td>
+                    </tr>
+                    <tr>
+                        <td>sh:uniqueLang</td>
+                        <td>String-based Constraints</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>sh:class </td>
+                        <td>Value Type Constraints</td>
+                        <td>owl:Class</td>
+                        <td><pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl a sh:NodeShape ;
+                sh:targetClass ?type;
+                sh:property [
+                    sh:path ?objectProperty;
+                    sh:class ?typeInRange ;
+                ]
+            } WHERE{
+                OPTIONAL {
+                    ?objectProperty a owl:ObjectProperty ;
+                    rdfs:range ?typeInRange .
+                }
+                FILTER (!isBlank(?type)) .
+                BIND ( URI(CONCAT(STR(?type),"Shape")) AS ?shapeUrl) .
+            }</pre>
+        </td>
+                    </tr>
+                    <tr>
+                        <td>sh:datatype </td>
+                        <td>Value Type Constraints</td>
+                        <td>owl:Datatype</td>
+                        <td><pre>
+            PREFIX owl:&lt;http://www.w3.org/2002/07/owl#&gt;
+            PREFIX rdfs:&lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+            PREFIX sh: &lt;http://www.w3.org/ns/shacl#&gt;
+            CONSTRUCT {
+                ?shapeUrl a sh:NodeShape ;
+                sh:targetClass ?type;
+                sh:property [
+                    sh:path ?dataProperty;
+                    sh:datatype ?datatype ;
+                                ]
+            } WHERE{
+                ?type a owl:Class .
+                OPTIONAL {
+                    ?dataProperty a owl:DatatypeProperty ;
+                    rdfs:domain ?type ;
+                    rdfs:range ?datatype .
+                }
+                FILTER (!isBlank(?type)) .
+                BIND ( URI(CONCAT(STR(?type),"Shape")) AS ?shapeUrl) .
+            }</pre>
+        </td>
+                    </tr>
+                    <tr>
+                        <td>sh:nodeKind </td>
+                        <td>Value Type Constraints</td>
+                        <td>xsd:anyURI, xsd:string</td>
+                        <td></td>
+                    </tr>
+
+                </table>
+                </div>
+
+            </div>
+        </div>
+        <br>
+       
+    
+        
+
+    </div>
+    <br>
+
+</main>
+<footer class="footer">
+    <hr/>
+    <div class="row">
+        <div class="col-md-2">
+            <a href="http://www.oeg-upm.net/" target="_blank"><img src="static/logos/OEG/oeg.png" alt="OEG logo" class="img-rounded img-responsive"></a>
+        </div>
+        <div class="col-md-10">
+            Alba Fernández Izquierdo, Andrea Cimmino Arriaga, and Raúl García Castro
+            <br>
+            Contact email: albafernandez@fi.upm.es, cimmino@fi.upm.es, or rgarcia@fi.upm.es
+            <br>
+            Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+            Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+            <br>
+            Latest revision November, 2019
+            <br><p>© Ontology Engineering Group</p>
+        </div>
+        
+    </div>
+</footer>
+
+
+</body>
+</html>
