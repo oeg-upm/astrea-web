@@ -36,7 +36,7 @@
 		<dependency>
 			<groupId>oeg.validation</groupId>
 			<artifactId>astrea</artifactId>
-			<version>0.1.2</version>
+			<version>1.0.0</version>
 		</dependency>
 		<!-- Swagger 2 dependency -->
 		<dependency>
