@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>oeg.validation</groupId>
 	<artifactId>astrea-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>astrea-service</name>
 	<description>Validation service that uses the Astrea library</description>
 
