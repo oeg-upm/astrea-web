@@ -18,6 +18,8 @@ $(document).ready(function() {
 
 // This function fetches the ontology URLs from the inputs and post them
 function loadontOlogies(){
+    hideAlerts();
+    $('#spinner').css("display", "block");
     var urls = [];
     var ontologyInputs = $("#buildyourform :input").each(function() {
         var url = this.value;
@@ -37,7 +39,7 @@ function postUrls(urls){
   xhr.setRequestHeader("Accept", "text/rdf+turtle");
   xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
-          hideAlerts();
+          $('#spinner').css("display", "none");
           if(xhr.status==206){
               $('#alert-warning').css("display", "block");
           }else if(xhr.status==200){
@@ -46,6 +48,7 @@ function postUrls(urls){
               $('#alert-error').css("display", "block");
           }
           if(xhr.responseText.length>0){
+               $('#modalLoading').modal('hide');
               download("astrea-shapes.ttl", xhr.responseText);
           }
        }
@@ -74,6 +77,7 @@ function download(filename, text) {
 
 // This function fetches the ontology URLs from the inputs and post them
 function generateFor(url){
+    $('#modalLoading').modal('show');
     var urls = [url];
     postUrls(urls);
 }

@@ -63,6 +63,7 @@
                 <h4 class="checkout-step-title" style="font-weight: normal;" >In this section SHACL shapes for well-known ontologies can be found. All these shapes were generated using <strong>Astrea</strong>. When one of the download buttons is pushed, the shapes for the selected ontology are generated using our services on the file.</h4>
             </div>
         </div>
+    
         <!-- Table section -->
         <div class="row">
             <div class="col-md-12">
@@ -70,94 +71,86 @@
                   <thead>
                     <tr>
                       <th scope="col">Ontology</th>
-                      <th scope="col">URL</th>
-                      <th scope="col">Format</th>
+                      <th scope="col">Formats</th>
                       <th scope="col">Imported ontologies</th>
                       <th scope="col" class="centered">Shapes</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td>SAREF</td>
-                      <td>Annotated HTML</td>
-                      <td><a href="https://w3id.org/saref">https://w3id.org/saref</a></td>
-                      <td><a href="http://www.w3.org/2006/time">http://www.w3.org/2006/time</a></td>
+                      <td><a href="http://www.w3.org/2006/time">W3C Time (2006)</a></td>
+                      <td><span class="label label-primary">turtle</span></td>
+                      <td>-</td>
+                      <td class="centered"><a href="#" onclick="generateFor('http://www.w3.org/2006/time')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
+                    </tr>
+                    <tr>
+                      <td><a href="https://w3id.org/saref">SAREF: the Smart Appliances REFerence ontology</a></td>
+                      <td><span class="label label-primary">html</span> <span class="label label-primary">turtle</span></td>
+                      <td><a href="http://www.w3.org/2006/time">W3C Time (2006)</a></td>
                       <td class="centered"><a href="#" onclick="generateFor('https://w3id.org/saref')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
                     </tr>
                     <tr>
-                      <td><a href="https://ontoology.linkeddata.es/publish/saref4bldg/">SAREF4BLDG</a></td>
-                      <td>N Triples</td>
-                      <td><a href="https://ontoology.linkeddata.es/publish/saref4bldg/ontology.n3">https://ontoology.linkeddata.es/publish/saref4bldg/ontology.n3</a></td>
+                      <td><a href="https://w3id.org/def/saref4envi#">SAREF extension for environment</a></td>
+                      <td><span class="label label-primary">html</span> <span class="label label-primary">turtle</span> <span class="label label-primary">xml/rdf</span> <span class="label label-primary">n-triples</span></td>
+                      <td>-</a></td>
+                      <td class="centered"><a href="#" onclick="generateFor('https://mariapoveda.github.io/saref-ext/OnToology/SAREF4ENV/ontology/saref4envi.ttl/documentation/ontology.ttl')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
+                    </tr>
+                    <tr>
+                      <td><a href="https://w3id.org/def/saref4bldg#">SAREF extension for building devices</a></td>
+                      <td><span class="label label-primary">html</span> <span class="label label-primary">turtle</span> <span class="label label-primary">xml/rdf</span> <span class="label label-primary">n-triples</span></td>
                       <td>-</td>
-                      <td class="centered"><a href="#" onclick="generateFor('https://ontoology.linkeddata.es/publish/saref4bldg/ontology.n3')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
+                      <td class="centered"><a href="#" onclick="generateFor('https://mariapoveda.github.io/saref-ext/OnToology/SAREF4BLD/ontology/saref4bldg.ttl/documentation/ontology.ttl')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
                     </tr>
                     <tr>
-                      <td>SAREF4ENER</td>
-                      <td>Annotated HTML</td>
-                      <td><a href="https://w3id.org/saref4ener">https://w3id.org/saref4ener</a></td>
-                      <td><a href="https://w3id.org/saref">https://w3id.org/saref</a></td>
-                      <td class="centered"><a href="#" onclick="generateFor('https://w3id.org/saref4ener')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
-                    </tr>
-                    <tr>
-                      <td><a href="http://iot.linkeddata.es/def/core/index-en.html">EU Project VICINITY</a></td>
-                      <td>Turtle</td>
-                      <td><a href="http://iot.linkeddata.es/def/core/ontology.ttl">http://iot.linkeddata.es/def/core/ontology.ttl</a></td>
+                      <td><a href="http://iot.linkeddata.es/def/core/index-en.html">EU Project VICINITY, core ontology</a></td>
+                      <td><span class="label label-primary">rdf/xml</span> <span class="label label-primary">turtle</span> <span class="label label-primary">n3</span></td>
                       <td>
-                          <a href="http://iot.linkeddata.es/def/wot#">http://iot.linkeddata.es/def/wot#</a><br/>
-                          <a href="http://www.w3.org/ns/org#">http://www.w3.org/ns/org#</a><br/>
-                          <a href="http://www.w3.org/ns/sosa/">http://www.w3.org/ns/sosa/</a><br/></td>
+                          <a href="http://iot.linkeddata.es/def/wot#">VICINITY WoT</a><br/>
+                          <a href="http://www.w3.org/ns/org#">ORG</a><br/>
+                          <a href="http://www.w3.org/ns/sosa/">SOSA</a><br/></td>
                       <td class="centered"><a href="#" onclick="generateFor('http://iot.linkeddata.es/def/core/ontology.ttl')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
-                    </tr>
+                    </tr>x
                     <tr>
                       <td><a href="http://iot.linkeddata.es/def/wot-mappings/index-en.html">Web of Thing Mappings extension</a></td>
-                      <td>RDF/XML</td>
-                      <td><a href="http://iot.linkeddata.es/def/wot-mappings/ontology.xml">http://iot.linkeddata.es/def/wot-mappings/ontology.xml</a></td>
-                      <td><a href="https://w3id.org/saref">https://w3id.org/saref</a></td>
+                      <td><span class="label label-primary">rdf/xml</span> <span class="label label-primary">turtle</span> <span class="label label-primary">n3</span></td>
+                      <td>
+                        <a href="http://iot.linkeddata.es/def/core/index-en.html">VICINITY Core</a><br/>
+                        <a href="http://iot.linkeddata.es/def/wot#">VICINITY WoT</a>
+                      </td>
                       <td class="centered"><a href="#" onclick="generateFor('http://iot.linkeddata.es/def/wot-mappings/ontology.xml')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
                     </tr>
                     <tr>
-                      <td><a href="http://delta.linkeddata.es/def/core/index-en.html">EU Project DELTA</a></td>
-                      <td>JSON-LD</td>
-                      <td><a href="http://delta.linkeddata.es/def/core/ontology.json">http://delta.linkeddata.es/def/core/ontology.json</a></td>
-                      <td><a href="https://w3id.org/def/openadr">https://w3id.org/def/openadr</a></td>
+                      <td><a href="http://delta.linkeddata.es/def/core/index-en.html">EU Project DELTA, core ontology</a></td>
+                      <td><span class="label label-primary">rdf/xml</span> <span class="label label-primary">turtle</span> <span class="label label-primary">json-ld</span> <span class="label label-primary">n-triples</span></td>
+                      <td><a href="https://w3id.org/def/openadr">DELTA OpenADR</a></td>
                       <td class="centered"><a href="#" onclick="generateFor('http://delta.linkeddata.es/def/core/ontology.json')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
                     </tr>
                     <tr>
                       <td><a href="https://w3id.org/def/openadr">OpenADR</a></td>
-                      <td>JSON-LD</td>
-                      <td><a href="https://albaizq.github.io/OpenADRontology/OnToology/ontology/openADRontology.owl/documentation/ontology.json">https://albaizq.github.io/OpenADRontology/OnToology/ontology/openADRontology.owl/documentation/ontology.json</a></td>
+                      <td><span class="label label-primary">rdf/xml</span> <span class="label label-primary">turtle</span> <span class="label label-primary">json-ld</span> <span class="label label-primary">n-triples</span></td>
                       <td>-</td>
                       <td class="centered"><a href="#" onclick="generateFor('https://albaizq.github.io/OpenADRontology/OnToology/ontology/openADRontology.owl/documentation/ontology.json')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
                     </tr>
 
-                    <tr>
-                      <td>Time</td>
-                      <td>TURTLE</td>
-                      <td><a href="http://www.w3.org/2006/time" id="ontology_url">http://www.w3.org/2006/time</a></td>
-                      <td>-</td>
-                      <td class="centered"><a href="#" onclick="generateFor('http://www.w3.org/2006/time')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
-                    </tr>
+                    
 
                     <tr>
                       <td><a href="https://www.w3.org/TR/vocab-ssn/">SSN</a></td>
-                      <td>TURTLE</td>
-                      <td><a href=" http://www.w3.org/ns/ssn/">http://www.w3.org/ns/ssn/</a></td>
-                      <td><a href="http://www.w3.org/ns/sosa/">http://www.w3.org/ns/sosa/</a></td>
+                      <td><span class="label label-primary">turtle</span></td>
+                      <td><a href="http://www.w3.org/ns/sosa/">SOSA</a></td>
                       <td class="centered"><a href="#" onclick="generateFor('http://www.w3.org/ns/ssn/')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
                     </tr>
 
                     <tr>
-                      <td><a href="http://www.onem2m.org/">oneM2M</a></td>
-                      <td>TURTLE</td>
-                      <td><a href="https://git.onem2m.org/MAS/BaseOntology/blob/master/base_ontology.owl">https://git.onem2m.org/MAS/BaseOntology/blob/master/base_ontology.owl</a></td>
+                      <td><a href="https://git.onem2m.org/MAS/BaseOntology/blob/master/base_ontology.owl">oneM2M</a></td>
+                      <td><span class="label label-primary">turtle</span></td>
                       <td>-</td>
                       <td class="centered"><a href="#" onclick="generateFor('https://git.onem2m.org/MAS/BaseOntology/blob/master/base_ontology.owl')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
                     </tr>
 
                     <tr>
-                      <td><a href="https://schema.org/">Schema</a></td>
-                      <td>NT</td>
-                      <td><a href="http://schema.org/version/latest/schema.nt">http://schema.org/version/latest/schema.nt</a></td>
+                      <td><a href="http://schema.org/version/latest/schema.nt">Schema</a></td>
+                      <td><span class="label label-primary">nt</span></td>
                       <td>-</td>
                       <td class="centered"><a href="#" onclick="generateFor('http://schema.org/version/latest/schema.nt')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
                     </tr>
@@ -166,7 +159,16 @@
             </div>
         </div>
         <br>
-        
+        <!-- Modal -->
+        <div class="modal fade" id="modalLoading" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <div class="loader">Loading...</div>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
     <br>
 

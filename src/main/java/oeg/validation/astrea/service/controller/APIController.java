@@ -41,7 +41,7 @@ public class APIController extends AbstractController{
 	    })
 	@RequestMapping(value = "/api/shacl", method = RequestMethod.POST, produces = {"text/rdf+turtle", "text/turtle"}) 
 	@ResponseBody
-	public String shapesFromOwlURL(@ApiParam(value = "A json document with ontology URLs and their formats. Accepted formats are: TURTLE, JSON-LD, NQ, NQUADS, NT, N-TRIPLES, RDF/XML, TriX", required = true ) @Valid @RequestBody(required = true) Endpoints ontologyURLs, HttpServletResponse response) {
+	public String shapesFromOwlURL(@ApiParam(value = "A json document with ontology URLs and their formats.", required = true ) @Valid @RequestBody(required = true) Endpoints ontologyURLs, HttpServletResponse response) {
 		prepareResponse(response);
 		Model ontologies = loadOntologies(ontologyURLs.getOntologies(), response);
 		Model shapes = astreaService.generateShacl(ontologies);		
