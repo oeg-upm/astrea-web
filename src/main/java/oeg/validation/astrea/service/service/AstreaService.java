@@ -1,11 +1,9 @@
 package oeg.validation.astrea.service.service;
 
-import java.io.File;
-
 import org.apache.jena.rdf.model.Model;
 import org.springframework.stereotype.Service;
+import astrea.generators.OwlGenerator;
 import astrea.model.ShaclFromOwl;
-import sharper.generators.OwlGenerator;
 
 @Service
 public class AstreaService {
