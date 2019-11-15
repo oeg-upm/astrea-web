@@ -43,6 +43,7 @@ public class APIController extends AbstractController{
 	@ResponseBody
 	public String shapesFromOwlURL(@ApiParam(value = "A json document with ontology URLs and their formats.", required = true ) @Valid @RequestBody(required = true) Endpoints ontologyURLs, HttpServletResponse response) {
 		prepareResponse(response);
+		log.info("Requested: "+ontologyURLs.getOntologies() );
 		Model ontologies = loadOntologies(ontologyURLs.getOntologies(), response);
 		Model shapes = astreaService.generateShacl(ontologies);		
 		if(shapes.isEmpty()) {
