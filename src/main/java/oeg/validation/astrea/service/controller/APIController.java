@@ -4,10 +4,13 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.vocabulary.OWL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,13 +46,18 @@ public class APIController extends AbstractController{
 	@ResponseBody
 	public String shapesFromOwlURL(@ApiParam(value = "A json document with ontology URLs and their formats.", required = true ) @Valid @RequestBody(required = true) Endpoints ontologyURLs, HttpServletResponse response) {
 		prepareResponse(response);
-		log.info("Requested: "+ontologyURLs.getOntologies() );
+		log.info("Requested: "+ontologyURLs.getOntologies());
 		Model ontologies = loadOntologies(ontologyURLs.getOntologies(), response);
+		List<String> additionalOntologyURLs = ontologies.listObjectsOfProperty(OWL.imports).toList().stream().map(url -> url.toString()).collect(Collectors.toList());
+		Model importedOntologies = loadOntologies(additionalOntologyURLs, response);
+		ontologies.add(importedOntologies);
 		Model shapes = astreaService.generateShacl(ontologies);		
 		if(shapes.isEmpty()) {
 			response.setStatus( HttpServletResponse.SC_BAD_REQUEST );
-			shapes =null;
+			shapes=null;
+			log.severe("shapes produced are empty");
 		}
+		log.info("Requested solved.");
 		return modelToString(shapes);
 	}
 	
