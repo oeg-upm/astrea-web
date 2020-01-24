@@ -66,13 +66,26 @@ function hideAlerts(){
 
 // This funciton creates the downloadable file and then start the download
 function download(filename, text) {
-  var element = document.createElement('a');
-  element.setAttribute('href', 'data:text/turtle;charset=utf-8,' + encodeURIComponent(text));
-  element.setAttribute('download', filename);
-  element.style.display = 'none';
-  document.body.appendChild(element);
-  element.click();
-  document.body.removeChild(element);
+  createBlob(text, filename);
+}
+
+function createBlob(content, filename){
+   var blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    if (navigator.msSaveBlob) { // IE 10+
+        navigator.msSaveBlob(blob, filename);
+    } else {
+        var link = document.createElement("a");
+        if (link.download !== undefined) { // feature detection
+            // Browsers that support HTML5 download attribute
+            var url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
 }
 
 // This function fetches the ontology URLs from the inputs and post them

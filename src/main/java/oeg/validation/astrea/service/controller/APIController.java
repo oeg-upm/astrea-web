@@ -77,7 +77,7 @@ public class APIController extends AbstractController{
 		response.setStatus( HttpServletResponse.SC_OK );
 		if(ontologyURLs!=null && !ontologyURLs.isEmpty()) {
 			for(int index=0; index < ontologyURLs.size(); index++) {
-				String url = ontologyURLs.get(index);
+				String url = ontologyURLs.get(index).trim();
 				try {
 					Model ontologyTemporal = ModelFactory.createDefaultModel();
 					ontologyTemporal.read(url);

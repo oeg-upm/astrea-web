@@ -111,6 +111,7 @@
                 <li><a href="/swagger-ui.html">API REST</a></li>
                 <li><a href="catalogue.html">Shapes catalogue</a></li>
                 <li class="active"><a href="material.html">Material</a></li>
+                <li><a href="ontology.html">Ontology</a></li>
                 <li><a href="https://github.com/oeg-upm/Astrea" class="navbar-brand pull-sm-right m-r-0"><i class="fa fa-github"></i> Github</a></li>
             </ul>
         </div><!--/.nav-collapse -->
@@ -132,34 +133,58 @@
              <div class="col-md-12">
                 <h4 class="checkout-step-title" style="font-weight: normal;" >In this section we provide the materials on top of which <strong>Astrea</strong> is built. Our contributions are the following:.</h4>
                 <ul>
-                  <li><a href="#mappings">Mappings</a>: a table containing the equivalences between the contructs of an ontology and the <a href="https://www.w3.org/TR/shacl/">SHACL</a> constructs.</li><a href="https://doi.org/10.5281/zenodo.3571009"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.3571009.svg" alt="DOI"></a>
+                  <li><a href="#mappings">Mappings</a>: a table containing the equivalences between the contructs of an ontology and the <a href="https://www.w3.org/TR/shacl/">SHACL</a> constructs. It follows the <a href="https://albaizq.github.io/astrea-ontology/OnToology/ontology.owl/documentation/index-en.html#">Astrea ontology</a>.<br/><a href="https://doi.org/10.5281/zenodo.3571009"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.3571009.svg" alt="DOI"></a> (License: <a href="https://creativecommons.org/licenses/by/4.0/legalcode">Creative Commons Attribution 4.0 International</a>) </li>
 
 
-                  <li><a href="https://astrea.helio.linkeddata.es">Astrea dataset</a>: a public-available dataset that contains all the material and work developed arround Astrea. It can be cited using</li>
+                  <li><a href="https://astrea.helio.linkeddata.es">Astrea dataset</a>: a public-available dataset to allow third-party systems querying and re-using the Astrea Mappings. It follows the <a href="https://albaizq.github.io/astrea-ontology/OnToology/ontology.owl/documentation/index-en.html#">Astrea ontology</a>.</li>
 
-                  <li><a href="https://github.com/oeg-upm/Astrea">Astrea library github</a></li>
+                  <li><a href="https://github.com/oeg-upm/Astrea">Astrea library github</a> (License: <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>) </li>
                  
-                 <li><a href="https://github.com/oeg-upm/astrea-web">Astrea web github</a></li>
+                 <li><a href="https://github.com/oeg-upm/astrea-web">Astrea web github</a> (License: <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>) </li>
                 </ul>
             </div>  
         </div>
 
-           <div class="row" id="mappings">
-            <div class="col-md-12 table-wrapper">
-                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
-            </div>
-          </div>
+          
         <!-- Info section -->
         <div class="row" id="mappings">
             <div class="col-md-12 table-wrapper">
                 <h3 class="checkout-step-title">Mappings</h3>
-                The following table shows the mappings identified between the Ontology construct patterns and SHACL construct patterns.
-                The tables includes the constructs, their associated patterns, and a SPARQL query that implements the transformation from ontology to shape.
+                <h4 class="checkout-step-title" style="font-weight: normal; text-align: justify;">The cornerstone element to automatically generate shapes from a set of ontologies are the mappings within the Astrea-KG. These mappings relate one, or more, ontology construct patterns with their equivalent SHACL construct patterns. The ontology constructs patterns include constructs from the wellknown OWL 2, RDFS, and XSD specifications. In addition, the mappings have been implemented as SPARQL CONSTRUCT queries in which the WHERE clause contains the ontology construct patterns, and the CONSTRUCT clause the SHACL construct patterns.</h4>
+                <h4 class="checkout-step-title" style="font-weight: normal;text-align: justify;">Notice that from a conceptual point of view the mappings are bi-directional, since they relate construct patterns. Nevertheless, their implementation is not bi-directional: the current SPARQL queries identify ontology construct patterns and translates them into the equivalent SHACL construct pattern.</h4>
+                <h4 class="checkout-step-title" style="font-weight: normal;text-align: justify;">Previous works already stated the similarity between OWL and SHACL constructs. However, during the development of the mappings we notice that the relation between single constructs was not enough to generate the shapes. The reason is that an ontology construct may be specified within different contextsand the equivalent SHACL may change depending on such context. As a result, the mappings relate patterns of constructs rather than just constructs.</h4>
+                <h4 class="checkout-step-title" style="font-weight: normal;text-align: justify;">For instance, the RDFS construct rdfs:range can be considered equivalent to the SHACL construct sh:class. But in order to such equivalence be correct the rdfs:range has to be defined in the context of an owl:ObjectProperty. Figure 1 shows the SHACL construct pattern of the sh:class that is related to the ontology contruct rdfs:range. Notice that this SHACL construct makes only sense in the context of a sh:PropertyShape.</h4>
+                <br>
+                <figure style="text-align: center">
+                   <img src="/static/img/lst1.jpg" style="width:40%"/>
+                  <figcaption>Figure 1 - SHACL contruct pattern for sh:class.</figcaption>
+                </figure>
+               <br>
+                <h4 class="checkout-step-title" style="font-weight: normal;text-align: justify;">Figure 2 reports the ontology construct pattern for rdfs:range that is equivalent to the one of Figure 1. However, the statement rdfs:range could be expressed alternatively: instead of having an URL in its range it may have a blank node that has different properties owl:unionOf, owl:someValuesFrom, or owl:allValuesFrom among others. For these cases other ontology construct patterns must be specified, like the one reported in Figure 3. Both ontology construct patterns are different yet they are equivalent to the same SHACL construct pattern.</h4>
+                <br>
+                <figure style="text-align: center;">
+                  <img src="/static/img/lst2.jpg" style="width:40%"/>
+                  <figcaption>Figure 2 - Ontology construct pattern for rdfs:range.</figcaption>
+                  </figure>
+                   <figure style="text-align: center;">
+                  <img src="/static/img/lst3.jpg" style="width:40%"/>
+                  <figcaption>Figure 3 - Alternative ontology construct pattern for rdfs:range.</figcaption>
+                </figure>
+               <br>
+
+                <h4 class="checkout-step-title" style="font-weight: normal;text-align: justify;">As it can be noticed the constructs are not enough to automatically generate shapes, patterns of constructs are required in the mappings to generate the shapes. Also, it is worth mentioning that different ontology constructs patterns may generate the same SHACL construct pattern, or vice versa.</h4>
+                
+                <hr>
+
+                <h4 class="checkout-step-title" style="font-weight: normal;text-align: justify;">The following table shows the mappings identified between the Ontology construct patterns and SHACL construct patterns.
+                The tables includes the constructs, their associated patterns, and a SPARQL query that implements the transformation from ontology to shape.</h4>
                 <!-- Table with mappings -->
-
+                 <div class="row" id="mappings">
+                  <div class="col-md-12 table-wrapper">
+                      <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+                  </div>
+                </div>
                
-               
-
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade in active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                         <div style="overflow: auto; height: 600px">
@@ -1869,7 +1894,7 @@
     <br>
 
 </main>
-<footer class="footer">
+<footer class="footer container">
     <hr/>
     <div class="row">
         <div class="col-md-2">
@@ -1879,6 +1904,8 @@
             Alba Fernández Izquierdo, Andrea Cimmino Arriaga, and Raúl García Castro
             <br>
             Contact email: albafernandez@fi.upm.es, cimmino@fi.upm.es, or rgarcia@fi.upm.es
+            <br>
+            <a href="/material.html">Licensing</a>
             <br>
             Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
             Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
