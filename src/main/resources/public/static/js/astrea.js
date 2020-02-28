@@ -33,7 +33,7 @@ function loadontOlogies(){
 // This function sends the urls as a json document to the backend
 function postUrls(urls){
   var xhr = new XMLHttpRequest();
-  var url = "/api/shacl";
+  var url = "/api/shacl/url";
   xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.setRequestHeader("Accept", "text/rdf+turtle");
