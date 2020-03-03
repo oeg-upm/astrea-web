@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,8 +12,12 @@ import javax.validation.Valid;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.NodeIterator;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.shacl.ShaclValidator;
 import org.apache.jena.shacl.Shapes;
+import org.apache.jena.vocabulary.RDF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +48,7 @@ public class ValidationAPI extends AbstractController{
 	    })
 	@RequestMapping(value = "/api/validation/document", method = RequestMethod.POST, produces = {"text/rdf+turtle", "text/turtle"}, consumes= {"application/json"}) 
 	@ResponseBody
-	public String validationWithShape(@ApiParam(value = "A document with the RDF data and the Shape document", required = true ) @Valid @RequestBody(required = true) ValidationDocument document, HttpServletResponse response, HttpServletRequest request) {
+	public String validationWithShape(@ApiParam(value = "A document with RDF data, a Shape document, and the format used by both (it can be any of these: Turtle, RDF/XML, N-Triples, JSON-LD, RDF/JSON, TriG, N-Quads, TriX)", required = true ) @Valid @RequestBody(required = true) ValidationDocument document, HttpServletResponse response, HttpServletRequest request) {
 		prepareResponse(response);
 		Model report =  ModelFactory.createDefaultModel();
 		log.info("Requested ontology content ");
@@ -52,6 +57,10 @@ public class ValidationAPI extends AbstractController{
 			Model shape = createModel(document.getShape(), document.getShapeFormat());
 			Shapes shapes = Shapes.parse(shape);
 			report = ShaclValidator.get().validate(shapes.getGraph(), data.getGraph()).getModel();
+			if(document.isStrict()) {
+				typesNotContainedInShape(data, shape, report);
+			}
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -75,6 +84,17 @@ public class ValidationAPI extends AbstractController{
 			content = output.toString();
 		}
 		return content;
+	}
+	
+	private void typesNotContainedInShape(Model data, Model shapes, Model report){
+		NodeIterator iterator = data.listObjectsOfProperty(RDF.type);
+		while(iterator.hasNext()) {
+			RDFNode type = iterator.next();
+			if(!shapes.contains(null, null, type)) {
+				report.add(report.createResource(), ResourceFactory.createProperty("https://w3id.org/def/astrea##missingShapeFor"), type);
+			}
+		}
+		
 	}
 	
 }

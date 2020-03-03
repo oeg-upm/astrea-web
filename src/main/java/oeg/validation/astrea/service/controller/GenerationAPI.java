@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import oeg.validation.astrea.service.model.Endpoints;
-import oeg.validation.astrea.service.model.Ontology;
+import oeg.validation.astrea.service.model.OntologyDocument;
 import oeg.validation.astrea.service.model.ValidationDocument;
 import oeg.validation.astrea.service.service.AstreaService;
 
@@ -71,22 +71,21 @@ public class GenerationAPI extends AbstractController{
 	}
 	
 	
-	@ApiOperation(value = "Build SHACL shapes from the content of an ontology.")
+	@ApiOperation(value = "Build SHACL shapes from an ontology document, supported formats: Turtle, RDF/XML, N-Triples, JSON-LD, RDF/JSON, TriG, N-Quads, TriX.")
 	@ApiResponses(value = {
 	        @ApiResponse(code = 200, message = "Shapes successfully built"),
 	        @ApiResponse(code = 400, message = "Bad request")
 	    })
-	@RequestMapping(value = "/api/shacl/document", method = RequestMethod.POST, produces = {"text/rdf+turtle", "text/turtle"}, consumes= {"text/rdf+n3", "text/n3", "text/rdf+nt", "text/ntriples", "text/rdf+ttl", "text/rdf+turtle",  "application/turtle", "application/x-turtle", "application/x-nice-turtle", "application/x-trig", "application/rdf+xml", "application/ld+json", "text/turtle"  }) 
+	@RequestMapping(value = "/api/shacl/document", method = RequestMethod.POST, produces = {"text/rdf+turtle", "text/turtle"} ) 
 	@ResponseBody
-	public String shapesFromOwlContent(@ApiParam(value = "A document with the content of an ontology", required = true ) @Valid @RequestBody(required = true) Ontology ontology, HttpServletResponse response, HttpServletRequest request) {
+	public String shapesFromOwlContent(@ApiParam( value = "A json specifying the ontology document and its format", required = true ) @Valid @RequestBody(required = true) OntologyDocument ontology, HttpServletResponse response, HttpServletRequest request) {
 		prepareResponse(response);
 		Model shapes =  ModelFactory.createDefaultModel();
 		log.info("Requested ontology content ");
 		Model ontologyModel = ModelFactory.createDefaultModel();
 		try {
-			String formatHeader = request.getHeader("Accept").toLowerCase().trim();
 			InputStream is = new ByteArrayInputStream(ontology.getOntology().getBytes() );
-			ontologyModel.read(is, null, sparqlResponseFormats.get(formatHeader));  // jsonDocument.get("format")
+			ontologyModel.read(is, null, ontology.getSerialisation());
 			List<String> additionalOntologyURLs = ontologyModel.listObjectsOfProperty(OWL.imports).toList().stream().map(url -> url.toString()).collect(Collectors.toList());
 			Model importedOntologies = loadOntologies(additionalOntologyURLs, response);
 			ontologyModel.add(importedOntologies);
