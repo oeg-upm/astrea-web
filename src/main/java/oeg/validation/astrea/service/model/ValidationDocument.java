@@ -30,8 +30,8 @@ public class ValidationDocument {
 	private String shape;
 	@ApiModelProperty(notes = "A valid RDF format, currently supported: Turtle, RDF/XML, N-Triples, JSON-LD, RDF/JSON, TriG, N-Quads, TriX.", required = true, position = 1, example="Turtle" )
 	private String shapeFormat;
-	@ApiModelProperty(notes = "This parameter specifies, if true, which types within the data are not covered by the provided shape", required = false, position = 1, example="true" )
-	private boolean strict;
+	@ApiModelProperty(notes = "This parameter specifies, if true, which types within the data are covered by the provided shape (cosider that those not cover by the shape are always correctly validated)", required = false, position = 1, example="true" )
+	private boolean coverage;
 	
 	
 	public ValidationDocument() {
@@ -74,12 +74,12 @@ public class ValidationDocument {
 		this.shapeFormat = shapeFormat;
 	}
 	
-	public boolean isStrict() {
-		return strict;
+	public boolean getCoverage() {
+		return coverage;
 	}
 
-	public void setStrict(boolean strict) {
-		this.strict = strict;
+	public void setCoverage(boolean coverage) {
+		this.coverage = coverage;
 	}
 
 	@Override

@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.List;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +16,7 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.shacl.ShaclValidator;
 import org.apache.jena.shacl.Shapes;
+import org.apache.jena.vocabulary.DC;
 import org.apache.jena.vocabulary.RDF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,8 +57,9 @@ public class ValidationAPI extends AbstractController{
 			Model shape = createModel(document.getShape(), document.getShapeFormat());
 			Shapes shapes = Shapes.parse(shape);
 			report = ShaclValidator.get().validate(shapes.getGraph(), data.getGraph()).getModel();
-			if(document.isStrict()) {
+			if(document.getCoverage()) {
 				typesNotContainedInShape(data, shape, report);
+				report.setNsPrefix("dc", "http://purl.org/dc/elements/1.1/");
 			}
 			
 		}catch(Exception e) {
@@ -90,8 +91,8 @@ public class ValidationAPI extends AbstractController{
 		NodeIterator iterator = data.listObjectsOfProperty(RDF.type);
 		while(iterator.hasNext()) {
 			RDFNode type = iterator.next();
-			if(!shapes.contains(null, null, type)) {
-				report.add(report.createResource(), ResourceFactory.createProperty("https://w3id.org/def/astrea##missingShapeFor"), type);
+			if(shapes.contains(null, null, type)) {
+				report.add(report.createResource(), DC.coverage, type);
 			}
 		}
 		
