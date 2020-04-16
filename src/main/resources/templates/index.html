@@ -18,7 +18,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- custom js for main-->
     <script src="/static/js/astrea.js"></script>
-    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-154424444-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-154424444-1');
+    </script>
 </head>
 
 <body>
@@ -41,7 +49,7 @@
                 <li><a href="documentation.html"><i class="fa fa-newspaper-o"></i> Documentation</a></li>
                 <li><a href="catalogue.html"><i class="fa fa-grav"></i> Catalogue</a></li>
                 <li><a href="/swagger-ui.html"><i class="fa fa-code"></i> API REST</a></li>
-                <li><a href="https://github.com/oeg-upm/Astrea" ><i class="fa fa-github"></i> Github</a></li>
+                <li><a href="dissemination.html"><i class="fa fa-clone"></i> Dissemination</a></li>
             </ul>
         </div><!--/.nav-collapse -->
 
@@ -60,7 +68,7 @@
                 <h2>Generate  <a href="https://www.w3.org/TR/shacl/">SHACL shapes</a> from your <a href="https://www.w3.org/TR/owl-features/">ontology</a>!</h2>
             </div>
             <div class="col-md-12">
-                <h4 class="checkout-step-title" style="font-weight: normal;" >This tool produces the SHACL shape that can be infered from one, or more, ontologies. Using Astrea only requires you to import an online ontology, and generate its shapes. Astrea uses the <a href="https://astrea.helio.linkeddata.es/sparql">Astrea-KG </a><a href="https://doi.org/10.5281/zenodo.3571009"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.3571009.svg" alt="DOI"></a> to generate the SHACL shapes.</h4>
+                <h4 class="checkout-step-title" style="font-weight: normal;" >This tool produces the SHACL shape that can be infered from one, or more, ontologies. Using Astrea only requires you to import an online ontology in order to generate its shapes.</h4>
             </div>
         </div>
         <!-- Info section -->
@@ -68,24 +76,37 @@
             <div class="col-md-12">
                 <h4 class="checkout-step-title">Important information</h4>
                 <ul>
-                                <li>Astrea will download and generate the SHACL shapes for any ontology specified with owl:import in any of the uploaded ontologies</li>
-                                <li>SHACL shapes will be generated only for the classes and properties included in the provided ontologies</li>
+                                <li>Astrea will include in the generation of the SHACL shapes any ontology specified under the owl:import statment.</li>
+                                <li>SHACL shapes will be generated only for the classes and properties included in the provided ontologies, or the imported ones.</li>
                             </ul>
             </div>
+            <br/>
         </div>
-        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="checkout-step-title"> <a href="/documentation.html#resources" role="button" data-parent="#accordion" >Licensing: how to cite Astrea Resources & Services</a></h4>
+            </div>
+        </div>
+        <hr/>
         <!-- Load ontologies section -->
         <div class="row">
             <div class="col-md-12">
-                <h4 class="checkout-step-title"> <a role="button" data-parent="#accordion" >Step 1: Provide the URLs for one or more ontologies</a></h4>
-                <p class="text-left"><label> Add the URI of the ontologies: </label></p>
+                <h4 class="checkout-step-title"> <a role="button" data-parent="#accordion" >Step 1: Provide the ontologies</a></h4>
+                <p class="text-left"><label> Add Ontology URIs:</label></p>
             </div>
             <div class="col-md-12" id="buildyourform">
-                <button id="add"  class="btn btn-primary mb-2 btn-custom add" >Add ontology</button>
-                <input  class="form-control ontology" name="ontology" id="ontology" placeholder="put here your ontology url" style="margin-top:10px;margin-bottom:10px">
-
+                <div class="input-group">
+                    <input  class="form-control ontology" name="ontology" id="ontology" placeholder="put here your ontology url" style="margin-top:5px;margin-bottom:5px">
+                    <span class="input-group-btn">
+                        <button id="add"  class="btn btn-success btn-custom add" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add URI</button>
+                    </span>
+                    
+                </div>
             </div>
-            
+            <div class="col-md-12" id="buildyourform" style="margin-top:10px;margin-bottom:10px">
+                <p class="text-left"><label> Choose Ontology file:</label></p>
+                <input type="file" id="upload">
+            </div>
         </div>
         <br>
         <!-- Download section -->
@@ -109,12 +130,26 @@
                   <strong>SHACL shapes partially generated!</strong> some of the provided URLs was not processable.
                 </div>
             </div>
+            <div class="col-md-12" id="generation_warning_input"> 
+                <div class="alert alert-warning" id="alert-warning-input" style="display:none;margin-top:10px;">
+                  <strong>No input provided!</strong> 
+                </div>
+            </div>
             <div class="col-md-12" id="generation_error"> 
                 <div class="alert alert-danger" id="alert-error" style="display:none;margin-top:10px;">
                   <strong>Error!</strong> check the provided URLs.
                 </div>
             </div>
-             
+            <div class="col-md-12" id="generation_error_dobuledragon"> 
+                <div class="alert alert-danger" id="alert-error-dobuledragon" style="display:none;margin-top:10px;">
+                  <strong>Error!</strong> provide only a set of URLs or an ontology file.
+                </div>
+            </div>
+            <div class="col-md-12" id="generation_error_format"> 
+                <div class="alert alert-danger" id="alert-error-format" style="display:none;margin-top:10px;">
+                  <strong>Error!</strong> unknown ontology format, supported formats Turtle (.ttl), N-Triples (.nt), N-Quads (.nq), TriG (.trig), RDF/XML (.rdf), RDF/XML (.owl), JSON-LD (.jsonld), RDF Thrift (.trdf), RDF Thrift (.rt), RDF/JSON (.rj), TriX (.trix).
+                </div>
+            </div>                  
         </div>
         <br>
         
@@ -134,7 +169,7 @@
             <br>
             Contact email: albafernandez@fi.upm.es, cimmino@fi.upm.es, or rgarcia@fi.upm.es
             <br>
-            <a href="/material.html">Licensing</a>
+            <a href="/documentation.html#resources">Licensing</a>
             <br>
             Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
             Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
@@ -146,6 +181,54 @@
     </div>
 </footer>
 
+    <script type="text/javascript">
+        var ontologyFileContent = "";
+        var format = "";
+        document.getElementById('upload').addEventListener('change', readFileAsString)
+        function readFileAsString() {
+            hideAlerts();
+            var files = this.files;
+            if (files.length === 0) {
+                console.log('No file is selected');
+                return;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                ontologyFileContent = event.target.result;
+            };
+            format = files[0].name;
+            if(format.endsWith(".ttl")){
+                format="Turtle";
+            }else if(format.endsWith(".nt")){
+                format="N-Triples";
+            }else if(format.endsWith(".nq")){
+                format="N-Quads";
+            }else if(format.endsWith(".trig")){
+                format="TriG";
+            }else if(format.endsWith(".rdf")){
+                format="RDF/XML";
+            }else if(format.endsWith(".owl")){
+                format="RDF/XML";
+            }else if(format.endsWith(".jsonld")){
+                format="JSON-LD";
+            }else if(format.endsWith(".trdf")){
+                format="RDF Thrift";
+            }else if(format.endsWith(".rt")){
+                format="RDF Thrift";
+            }else if(format.endsWith(".rj")){
+                format="RDF/JSON";
+            }else if(format.endsWith(".trix")){
+                format="TriX";
+            } else {
+                $('#alert-error-format').css("display", "block");
+                ontologyFileContent = "";
+                format = "";
+            }
+            if(format.length>0)
+                reader.readAsText(files[0]);
+        }
+    </script>
 
 </body>
 </html>

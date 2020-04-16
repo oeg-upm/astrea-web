@@ -13,10 +13,10 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.shacl.ShaclValidator;
 import org.apache.jena.shacl.Shapes;
 import org.apache.jena.vocabulary.DC;
+import org.apache.jena.vocabulary.DC_11;
 import org.apache.jena.vocabulary.RDF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -92,7 +92,7 @@ public class ValidationAPI extends AbstractController{
 		while(iterator.hasNext()) {
 			RDFNode type = iterator.next();
 			if(shapes.contains(null, null, type)) {
-				report.add(report.createResource(), DC.coverage, type);
+				report.add(report.createResource(), DC_11.coverage, type);
 			}
 		}
 		

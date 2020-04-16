@@ -30,7 +30,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import oeg.validation.astrea.service.model.Endpoints;
 import oeg.validation.astrea.service.model.OntologyDocument;
-import oeg.validation.astrea.service.model.ValidationDocument;
 import oeg.validation.astrea.service.service.AstreaService;
 
 @RestController

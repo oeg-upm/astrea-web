@@ -138,7 +138,7 @@
                 <li><a href="documentation.html"><i class="fa fa-newspaper-o"></i> Documentation</a></li>
                 <li><a href="catalogue.html"><i class="fa fa-grav"></i> Catalogue</a></li>
                 <li><a href="/swagger-ui.html"><i class="fa fa-code"></i> API REST</a></li>
-                <li><a href="https://github.com/oeg-upm/Astrea" ><i class="fa fa-github"></i> Github</a></li>
+                <li><a href="dissemination.html"><i class="fa fa-clone"></i> Dissemination</a></li>
             </ul>
         </div><!--/.nav-collapse -->
 
@@ -155,10 +155,10 @@
         <div class="row">
             <nav class="col-sm-3" id="myScrollspy">
                   <ul class="nav nav-pills nav-stacked">
-                    <li class="active" class="nav nav-pills nav-stacked"><a href="#resources">Astrea resources</a></li>
+                    <li class="active" class="nav nav-pills nav-stacked"><a href="#resources">Astrea Licensing</a></li>
                     <li class="nav nav-pills nav-stacked"><a href="#kg">Astrea Knowledge Graph</a></li>
-                    <li class="nav nav-pills nav-stacked"><a href="#core">Astrea core GitHub</a></li>
-                    <li class="nav nav-pills nav-stacked"><a href="#service">Astrea service GitHub</a></li>
+                    <!--<li class="nav nav-pills nav-stacked"><a href="#core">Astrea core GitHub</a></li>
+                    <li class="nav nav-pills nav-stacked"><a href="#service">Astrea service GitHub</a></li>-->
                     <li class="nav nav-pills nav-stacked"><a href="#api">Astrea (interactive) API REST</a></li>  
                     <li class="nav nav-pills nav-stacked"><a href="#ontology">Ontology for the mappings</a></li>
                     <li class="nav nav-pills nav-stacked"><a href="#description">Mappings description</a></li>
@@ -172,35 +172,41 @@
                   </div>
                   <hr>
                   <div id="resources">         
-                    <h2>Astrea resources</h2>
-                     <p>In this section we provide the materials on top of which <strong>Astrea</strong> is built. Our contributions are the following:</p>
+                    <h2>Astrea Licensing</h2>
+                     <p>In this section we provide the materials on top of which <strong>Astrea</strong> is built and how to reference or cite them. Our contributions are the following:</p>
                     <ul>
-                      <li><a href="#mappings">Mappings</a>: a table containing the equivalences between the contructs of an ontology and the <a href="https://www.w3.org/TR/shacl/">SHACL</a> constructs. It follows the <a href="https://albaizq.github.io/astrea-ontology/OnToology/ontology.owl/documentation/index-en.html#">Astrea ontology</a>.<br/><a href="https://doi.org/10.5281/zenodo.3571009"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.3571009.svg" alt="DOI"></a> (License: <a href="https://creativecommons.org/licenses/by/4.0/legalcode">Creative Commons Attribution 4.0 International</a>) </li>
+                      
+                      <li><a href="#kg">Astrea Knowledge Graph:</a> is a dataset in RDF contaning all the elements from the table <a href="#mappings">Mappings</a> presented in this document. In case of a third-party using this resource it must be referenced by <a href="https://doi.org/10.5281/zenodo.3571009"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.3571009.svg" alt="DOI"></a>. The Astrea Knowledge Graph is published under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a> license.</li><br/>
 
+                      <li><a href="#api">Astrea web service:</a> in case of a third-party software artefact integrates the Astrea REST service, it must be referenced according to the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a> license.</li> </li><br/>
 
-                      <li><a href="https://astrea.helio.linkeddata.es">Astrea knowledge graph</a>: a public-available dataset to allow third-party systems querying and re-using the Astrea Mappings. It follows the <a href="https://albaizq.github.io/astrea-ontology/OnToology/ontology.owl/documentation/index-en.html#">Astrea ontology</a>.</li>
-
-                      <li><a href="https://github.com/oeg-upm/Astrea">Astrea core github</a> (License: <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>) </li>
+                      <li><a href="#ontology">Astrea ontology:</a> the Astrea Knowledge Graph is modelled according to the <a href="https://albaizq.github.io/astrea-ontology/OnToology/ontology.owl/documentation/index-en.html#">Astrea ontology</a>. The ontology is publised under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a> license.</li><br/>
+                      
                      
-                     <li><a href="https://github.com/oeg-upm/astrea-web">Astrea service github</a> (License: <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>) </li>
+
+                      <!--<li><a href="https://astrea.helio.linkeddata.es">Astrea knowledge graph</a>: a public-available dataset to allow third-party systems querying and re-using the Astrea Mappings. It follows the <a href="https://albaizq.github.io/astrea-ontology/OnToology/ontology.owl/documentation/index-en.html#">Astrea ontology</a>.</li>-->
+
+                     <!-- <li><a href="https://github.com/oeg-upm/Astrea">Astrea core github</a> (License: <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>) </li>
+                     
+                     <li><a href="https://github.com/oeg-upm/astrea-web">Astrea service github</a> (License: <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>) </li>-->
                     </ul>
                   </div>
                   <hr>
                   <div id="kg">         
                     <h2>Astrea Knowledge Graph</h2>
-                    <p>Astrea relies on a <a href="https://astrea.helio.linkeddata.es">public available Knowledge Graph</a> that publishes all the mappings required to generate the SHACL shapes from the given ontologies. Although the mappings are listed <a href="#list">below</a> in this documentation, they can be also found (or downloaded) from the Knowledge Graph or the <a href="https://doi.org/10.5281/zenodo.3571009">Zenodo dataset</a>. 
+                    <p>Astrea relies on its Knowledge Graph, which contains all the mappings required to generate the SHACL shapes from the given ontologies. Although the mappings within the Knowledge Graph are listed <a href="#list">below</a> in this documentation, the RDF dataset can be downloaded from the <a href="https://doi.org/10.5281/zenodo.3571009">Zenodo repository</a>. 
                   </div>
                   <hr>     
-                  <div id="core">         
+                 <!-- <div id="core">         
                     <h2>Astrea core Github</h2>
                     <p>Astrea is implemented by a Java core library that reads the mappings from the Astrea online Knlowedge Graph, and then, uses them to generate the SHACL shapes for a given set of ontologies. This core library is also incharge of retrieving the ontologies if their URL is provided, or import any ontology under the statement <i>owl:imports</i> so it will be included in the shape. The Astrea core library, and all the documentation related, can be found in the <a href="https://github.com/oeg-upm/Astrea">Astrea GitHub project</a>.</p>
                   </div>
-                  <hr>
+                  <hr> 
                   <div id="service">         
                     <h2>Astrea service GitHub</h2>
                     <p>The Astrea service relies on the Astrea core library to work. This service is the current portal in which you are right now. The service includes some extra features to the Astrea core such as the validation of RDF, the generation on SHACL shapes through a web GUI, or a REST API. The service, and all the documentation related, can be found in the <a href="https://github.com/oeg-upm/astrea-web">Astrea service GitHub project</a></p>
                   </div>
-                  <hr>
+                  <hr>-->
                   <div id="api">         
                     <h2>Astrea (interactive) REST API</h2>
                     <p>Astrea can be used through the web or thorugh its REST API that allows the generating of SHACL shapes from a set of Ontology urls, or directly posting an ontology content. In addition, the REST API counts with a validation interface that given an RDF document and a SHAPE outputs a validation report. This validation has as an aditional feature that can specify in the report which types from the data were covered by the provided shape; consider that all the data not covered by the shape is always validated as true. For more information, visit the <a href="/swagger-ui.html">REST API interactive documentation</a></p>
@@ -208,7 +214,7 @@
                   <hr>
                   <div id="ontology">    
                     <h2>Astrea Ontology</h2>
-                    <p>The Astrea-KG, either the online <a href="https://astrea.helio.linkeddata.es/">KG</a> or the <a href="https://doi.org/10.5281/zenodo.3571009">Zenodo</a>, contains and publishes the information of the 157 mappings developed. A <a href="https://w3id.org/def/astrea">vocabulary to model these mappings has been defined</a>. Figure 1 shows an overview of such vocabulary, which models the relation between the mappings between ontology and SHACL construct patterns, and the mappings implementation as SPARQL queries. </p>
+                    <p>The Astrea Knowledge Graph, available at <a href="https://doi.org/10.5281/zenodo.3571009">Zenodo</a>, contains and publishes the information of the 157 mappings developed. A <a href="https://w3id.org/def/astrea">vocabulary to model these mappings has been defined</a>. Figure 1 shows an overview of such vocabulary, which models the relation between the mappings between ontology and SHACL construct patterns, and the mappings implementation as SPARQL queries. </p>
                     <br>
                     <figure style="text-align: center">
                        <img src="/static/img/onto.jpg" style="width:50%"/>
@@ -1729,7 +1735,7 @@
             <br>
             Contact email: albafernandez@fi.upm.es, cimmino@fi.upm.es, or rgarcia@fi.upm.es
             <br>
-            <a href="/material.html">Licensing</a>
+            <a href="/documentation.html#resources">Licensing</a>
             <br>
             Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
             Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>

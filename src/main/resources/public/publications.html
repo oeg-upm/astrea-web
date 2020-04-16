@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Astrea Shapes Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+
+    <!-- JS -->
+    <script src="/static/js/jquery/jquery.min.js"></script>
+    <script src="/static/js/bootstrap/bootstrap.min.js"></script>
+   
+    <!-- CSS  -->
+ 	  <link rel="stylesheet" href="/static/css/astrea.css">
+    <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="/static/css/jquery/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- custom js for main-->
+    <script src="/static/js/astrea.js"></script>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy" >
+
+<!-- Static navbar -->
+<nav class="navbar navbar-default" id="dissemination" >
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="static/logos/astrea.svg" class="img-responsive" width="30" height="30" alt="" style="margin-top:-10px"></a><!-- Source of the logo: https://commons.wikimedia.org/wiki/File:5_Astraea_Symbol.svg-->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li ><a href="index.html">Main</a></li>
+                <li><a href="documentation.html"><i class="fa fa-newspaper-o"></i> Documentation</a></li>
+                <li><a href="catalogue.html"><i class="fa fa-grav"></i> Catalogue</a></li>
+                <li><a href="/swagger-ui.html"><i class="fa fa-code"></i> API REST</a></li>
+                <li><a href="dissemination.html"><i class="fa fa-clone"></i> Dissemination</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>
+
+
+
+
+<main role="main" >
+    
+    <div class="container" >
+        <!--TESTING -->
+        <div class="row">
+            <nav class="col-sm-3" id="myScrollspy">
+                  <ul class="nav nav-pills nav-stacked">
+                    <li class="active" class="nav nav-pills nav-stacked"><a href="#publications">Publications</a></li>
+                    <!--<li class="active" class="nav nav-pills nav-stacked"><a href="#tutorials">Tutorials</a></li>
+                    <li class="active" class="nav nav-pills nav-stacked"><a href="#tutorials">Slides</a></li>
+                    -->
+                    <li class="nav nav-pills nav-stacked"><a href="#dissemination"><i class="fa fa-arrow-up"></i> Go top</a></li>
+                  </ul>
+            </nav>
+            <div class="col-sm-9" >
+              <div >   
+                <h1><i class="fa fa-newspaper-o"></i> Astrea Dissemination</a> </h1>
+              </div>
+                  
+              <div id="publications">         
+                    <h2>Astrea publications</h2>
+                     <p>In this section we provide a list of related publications to Astrea:</p>
+                    <ul>
+                      
+                      <li><strong>2020</strong>: Cimmino, A., Fernández-Izquierdo, A., & García-Castro, R. (2020). Astrea: automatic generation of SHACL shapes from ontologies. In European Semantic Web Conference.</li>
+                      <br/>
+                      
+                    </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+    </main>
+<footer class="footer container">
+    <hr/>
+    <div class="row">
+        <div class="col-md-2">
+            <a href="http://www.oeg-upm.net/" target="_blank"><img src="static/logos/oeg/oeg.png" alt="OEG logo" class="img-rounded img-responsive"></a>
+        </div>
+        <div class="col-md-10">
+            Alba Fernández Izquierdo, Andrea Cimmino Arriaga, and Raúl García Castro
+            <br>
+            Contact email: albafernandez@fi.upm.es, cimmino@fi.upm.es, or rgarcia@fi.upm.es
+            <br>
+            <a href="/documentation.html#resources">Licensing</a>
+            <br>
+            Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+            Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+            <br>
+            Latest revision November, 2019
+            <br><p>© Ontology Engineering Group</p>
+        </div>
+        
+    </div>
+</footer>
+
+
+</body>
+</html>
