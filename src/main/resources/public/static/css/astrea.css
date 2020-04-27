@@ -13,11 +13,12 @@
   color: white;
   text-align: center;
 }
-        
+
 
 .centered {
   text-align: center;
 }
+
 
 .loader, .loader:after {
           border-radius: 50%;

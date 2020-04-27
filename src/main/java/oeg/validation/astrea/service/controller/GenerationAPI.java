@@ -47,7 +47,7 @@ public class GenerationAPI extends AbstractController{
 	@ApiOperation(value = "Build SHACL shapes for the provided ontology URLs.")
 	@ApiResponses(value = {
 	        @ApiResponse(code = 200, message = "Shapes successfully built"),
-	        @ApiResponse(code = 206, message = "Some URLs provided built an empty shacl document"),
+	        @ApiResponse(code = 206, message = "There was an error processing one of the ontology formats from the URLs provided, some partial results could be output"),
 	        @ApiResponse(code = 400, message = "Bad request")
 	    })
 	@RequestMapping(value = "/api/shacl/url", method = RequestMethod.POST, produces = {"text/rdf+turtle", "text/turtle"}, consumes= {"application/json"}) 
@@ -55,16 +55,17 @@ public class GenerationAPI extends AbstractController{
 	public String shapesFromOwlURL(@ApiParam(value = "A json document with ontology URLs and their formats.", required = true ) @Valid @RequestBody(required = true) Endpoints ontologyURLs, HttpServletResponse response) {
 		prepareResponse(response);
 		log.info("Requested: "+ontologyURLs.getOntologies());
-		Model ontologies = loadOntologies(ontologyURLs.getOntologies(), response);
-		List<String> additionalOntologyURLs = ontologies.listObjectsOfProperty(OWL.imports).toList().stream().map(url -> url.toString()).collect(Collectors.toList());
-		Model importedOntologies = loadOntologies(additionalOntologyURLs, response);
-		ontologies.add(importedOntologies);
-		Model shapes = astreaService.generateShacl(ontologies);		
-		if(shapes.isEmpty()) {
-			response.setStatus( HttpServletResponse.SC_NO_CONTENT );
-			shapes=null;
-			log.severe("shapes produced are empty");
-		}
+			Model ontologies = loadOntologies(ontologyURLs.getOntologies(), response);
+			List<String> additionalOntologyURLs = ontologies.listObjectsOfProperty(OWL.imports).toList().stream().map(url -> url.toString()).collect(Collectors.toList());
+			Model importedOntologies = loadOntologies(additionalOntologyURLs, response);
+			ontologies.add(importedOntologies);
+			Model shapes = astreaService.generateShacl(ontologies);		
+			System.out.println(">"+response.getStatus());
+			if(shapes.isEmpty()) {
+				response.setStatus( HttpServletResponse.SC_PARTIAL_CONTENT);
+				shapes=null;
+				log.severe("shapes produced are empty");
+			}
 		log.info("Requested solved.");
 		return modelToString(shapes);
 	}
@@ -147,16 +148,56 @@ public class GenerationAPI extends AbstractController{
 				String url = ontologyURLs.get(index).trim();
 				try {
 					Model ontologyTemporal = ModelFactory.createDefaultModel();
-					ontologyTemporal.read(url);
+					String jenaFormat = computeFormat(url);
+					if(jenaFormat!=null) {
+						ontologyTemporal.read(url,jenaFormat);
+					}else {
+						ontologyTemporal.read(url);
+					}
 					if(!ontologyTemporal.isEmpty())
 						ontology.add(ontologyTemporal);
 				}catch(Exception e) {
-					log.severe(e.toString());
 					response.setStatus( HttpServletResponse.SC_PARTIAL_CONTENT );
+					log.severe(e.toString());
 				}
 			}
-		}
+		} 
 		return ontology;
+	}
+
+
+	private String computeFormat(String url) {
+		String format = url.substring(url.lastIndexOf('.'));
+		if(format!=null && !format.isEmpty()) {
+			if(format.endsWith(".ttl")){
+	            format="Turtle";
+	        }else if(format.endsWith(".nt")){
+	            format="N-Triples";
+	        }else if(format.endsWith(".nq")){
+	            format="N-Quads";
+	        }else if(format.endsWith(".trig")){
+	            format="TriG";
+	        }else if(format.endsWith(".rdf")){
+	            format="RDF/XML";
+	        }else if(format.endsWith(".owl")){
+	            format="RDF/XML";
+	        }else if(format.endsWith(".jsonld")){
+	            format="JSON-LD";
+	        }else if(format.endsWith(".trdf")){
+	            format="RDF Thrift";
+	        }else if(format.endsWith(".rt")){
+	            format="RDF Thrift";
+	        }else if(format.endsWith(".rj")){
+	            format="RDF/JSON";
+	        }else if(format.endsWith(".trix")){
+	            format="TriX";
+	        }else {
+	        		format = null;
+	        }
+		}else {
+			format = null;
+		}
+		return format;
 	}
 		
 	
