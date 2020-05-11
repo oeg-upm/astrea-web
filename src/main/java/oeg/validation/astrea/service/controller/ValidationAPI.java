@@ -15,7 +15,6 @@ import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.shacl.ShaclValidator;
 import org.apache.jena.shacl.Shapes;
-import org.apache.jena.vocabulary.DC;
 import org.apache.jena.vocabulary.DC_11;
 import org.apache.jena.vocabulary.RDF;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +60,7 @@ public class ValidationAPI extends AbstractController{
 				typesNotContainedInShape(data, shape, report);
 				report.setNsPrefix("dc", "http://purl.org/dc/elements/1.1/");
 			}
-			
+			response.setStatus(200);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
