@@ -10,23 +10,15 @@
     <!-- JS -->
     <script src="/static/js/jquery/jquery.min.js"></script>
     <script src="/static/js/bootstrap/bootstrap.min.js"></script>
-   
+
     <!-- CSS  -->
- 	<link rel="stylesheet" href="/static/css/astrea.css">
+    <link rel="stylesheet" href="/static/css/astrea.css">
     <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css"></link>
     <link rel="stylesheet" href="/static/css/jquery/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- custom js for main-->
     <script src="/static/js/astrea.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-154424444-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', 'UA-154424444-1');
-    </script>
 </head>
 
 <body>
@@ -45,9 +37,9 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="index.html">Main</a></li>
+                <li ><a href="index.html">Main</a></li>
                 <li><a href="documentation.html"><i class="fa fa-newspaper-o"></i> Documentation</a></li>
-                <li><a href="catalogue.html"><i class="fa fa-grav"></i> Catalogue</a></li>
+                <li class="active"><a href="catalogue.html"><i class="fa fa-grav"></i> Catalogue</a></li>
                 <li><a href="/swagger-ui.html"><i class="fa fa-code"></i> API REST</a></li>
                 <li><a href="dissemination.html"><i class="fa fa-clone"></i> Dissemination</a></li>
             </ul>
@@ -65,95 +57,124 @@
         <!-- Header section -->
         <div class="row">
             <div class="col-md-12">
-                <h2>Generate  <a href="https://www.w3.org/TR/shacl/">SHACL shapes</a> from your <a href="https://www.w3.org/TR/owl-features/">ontology</a>!</h2>
+                <h2> <a href="https://www.w3.org/TR/shacl/">SHACL shapes</a> catalogue for well-kown <a href="https://www.w3.org/TR/owl-features/">ontologies</a></h2>
             </div>
             <div class="col-md-12">
-                <h4 class="checkout-step-title" style="font-weight: normal;" >This tool produces the SHACL shape that can be infered from one, or more, ontologies. Using Astrea only requires you to import an online ontology in order to generate its shapes.</h4>
+                <h4 class="checkout-step-title" style="font-weight: normal;" >In this section SHACL shapes for well-known ontologies can be found. All these shapes were generated using <strong>Astrea</strong>. When one of the download buttons is pushed, the shapes for the selected ontology are generated using our services on the file.</h4>
             </div>
         </div>
-        <!-- Info section -->
-        <div class="row">
-            <div class="col-md-12">
-                <h4 class="checkout-step-title">Important information</h4>
-                <ul>
-                                <li>Astrea will include in the generation of the SHACL shapes any ontology specified under the owl:import statment.</li>
-                                <li>SHACL shapes will be generated only for the classes and properties included in the provided ontologies, or the imported ones.</li>
-                            </ul>
-            </div>
-            <br/>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h4 class="checkout-step-title"> <a href="/documentation.html#resources" role="button" data-parent="#accordion" >Licensing and how to cite Astrea Resources & Services</a></h4>
-            </div>
-        </div>
-        <hr/>
-        <!-- Load ontologies section -->
-        <div class="row">
-            <div class="col-md-12">
-                <h4 class="checkout-step-title"> <a role="button" data-parent="#accordion" >Step 1: Provide the ontologies</a></h4>
-                <p class="text-left"><label> Add Ontology URIs:</label></p>
-            </div>
-            <div class="col-md-12" id="buildyourform">
-                <div class="input-group">
-                    <input  class="form-control ontology" name="ontology" id="ontology" placeholder="put here your ontology url" style="margin-top:5px;margin-bottom:5px">
-                    <span class="input-group-btn">
-                        <button id="add"  class="btn btn-success btn-custom add" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add URI</button>
-                    </span>
-                    
-                </div>
-            </div>
-            <div class="col-md-12" id="buildyourform" style="margin-top:10px;margin-bottom:10px">
-                <p class="text-left"><label> Choose Ontology file:</label></p>
-                <input type="file" id="upload">
-            </div>
-        </div>
-        <br>
-        <!-- Download section -->
-        <div class="row">
-            <div class="col-md-12">
-                <h4 class="checkout-step-title"> <a role="button" data-parent="#accordion" >Step 2: Create and download the shapes</a></h4>
-            </div>
-            <div class="col-md-12">
-                <button id="load"  class="btn btn-primary mb-2 btn-custom" onclick="loadontOlogies()" >Generate shapes</button>
-            </div>
-            <div class="col-md-12" id="spinner" style="display: none">
-                <div class="loader">Loading...</div>
-            </div>
-            <div class="col-md-12" id="generation_success"> 
-                <div class="alert alert-success" id="alert-success" style="display:none;margin-top:10px;">
-                    <strong>SHACL shapes successfully generated!.</strong>
-                </div>
-            </div>
-            <div class="col-md-12" id="generation_warning"> 
-                <div class="alert alert-warning" id="alert-warning" style="display:none;margin-top:10px;">
-                  <strong>Warning! the format for some of the ontologies provided with an URL could not be discovered.</strong> SHACL shapes could be partially generated if multiple urls were provided.
-                </div>
-            </div>
-            <div class="col-md-12" id="generation_warning_input"> 
-                <div class="alert alert-warning" id="alert-warning-input" style="display:none;margin-top:10px;">
-                  <strong>No input provided!</strong> 
-                </div>
-            </div>
-            <div class="col-md-12" id="generation_error"> 
-                <div class="alert alert-danger" id="alert-error" style="display:none;margin-top:10px;">
-                  <strong>Error!</strong> check the provided URLs.
-                </div>
-            </div>
-            <div class="col-md-12" id="generation_error_dobuledragon"> 
-                <div class="alert alert-danger" id="alert-error-dobuledragon" style="display:none;margin-top:10px;">
-                  <strong>Error!</strong> provide only a set of URLs or an ontology file.
-                </div>
-            </div>
-            <div class="col-md-12" id="generation_error_format"> 
-                <div class="alert alert-danger" id="alert-error-format" style="display:none;margin-top:10px;">
-                  <strong>Error!</strong> unknown ontology format, supported formats Turtle (.ttl), N-Triples (.nt), N-Quads (.nq), TriG (.trig), RDF/XML (.rdf), RDF/XML (.owl), JSON-LD (.jsonld), RDF Thrift (.trdf), RDF Thrift (.rt), RDF/JSON (.rj), TriX (.trix).
-                </div>
-            </div>                  
-        </div>
-        <br>
-        
 
+        <!-- Table section -->
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Ontology</th>
+                        <th scope="col">Formats</th>
+                        <th scope="col">Imported ontologies</th>
+                        <th scope="col" class="centered">Shapes</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><a href="http://downloads.dbpedia.org/2016-10/dbpedia_2016-10.owl">DBpedia (2016)</a></td>
+                        <td><span class="label label-primary">RDF/XML</span></td>
+                        <td>-</td>
+                        <td class="centered"><a href="#" onclick="generateFor('http://downloads.dbpedia.org/2016-10/dbpedia_2016-10.owl')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="http://www.w3.org/2006/time">W3C Time (2006)</a></td>
+                        <td><span class="label label-primary">turtle</span></td>
+                        <td>-</td>
+                        <td class="centered"><a href="#" onclick="generateFor('http://www.w3.org/2006/time')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://w3id.org/saref">SAREF: the Smart Appliances REFerence ontology</a></td>
+                        <td><span class="label label-primary">html</span> <span class="label label-primary">turtle</span></td>
+                        <td><a href="http://www.w3.org/2006/time">W3C Time (2006)</a></td>
+                        <td class="centered"><a href="#" onclick="generateFor('https://w3id.org/saref')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://w3id.org/def/saref4envi#">SAREF extension for environment</a></td>
+                        <td><span class="label label-primary">html</span> <span class="label label-primary">turtle</span> <span class="label label-primary">xml/rdf</span> <span class="label label-primary">n-triples</span></td>
+                        <td>-</a></td>
+                        <td class="centered"><a href="#" onclick="generateFor('https://mariapoveda.github.io/saref-ext/OnToology/SAREF4ENV/ontology/saref4envi.ttl/documentation/ontology.ttl')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://w3id.org/def/saref4bldg#">SAREF extension for building devices</a></td>
+                        <td><span class="label label-primary">html</span> <span class="label label-primary">turtle</span> <span class="label label-primary">xml/rdf</span> <span class="label label-primary">n-triples</span></td>
+                        <td>-</td>
+                        <td class="centered"><a href="#" onclick="generateFor('https://mariapoveda.github.io/saref-ext/OnToology/SAREF4BLD/ontology/saref4bldg.ttl/documentation/ontology.ttl')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="http://iot.linkeddata.es/def/core/index-en.html">EU Project VICINITY, core ontology</a></td>
+                        <td><span class="label label-primary">rdf/xml</span> <span class="label label-primary">turtle</span> <span class="label label-primary">n3</span></td>
+                        <td>
+                            <a href="http://iot.linkeddata.es/def/wot#">VICINITY WoT</a><br/>
+                            <a href="http://www.w3.org/ns/org#">ORG</a><br/>
+                            <a href="http://www.w3.org/ns/sosa/">SOSA</a><br/></td>
+                        <td class="centered"><a href="#" onclick="generateFor('http://iot.linkeddata.es/def/core/ontology.ttl')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
+                    </tr>x
+                    <tr>
+                        <td><a href="http://iot.linkeddata.es/def/wot-mappings/index-en.html">Web of Things Mappings extension</a></td>
+                        <td><span class="label label-primary">rdf/xml</span> <span class="label label-primary">turtle</span> <span class="label label-primary">n3</span></td>
+                        <td>
+                            <a href="http://iot.linkeddata.es/def/core/index-en.html">VICINITY Core</a><br/>
+                            <a href="http://iot.linkeddata.es/def/wot#">VICINITY WoT</a>
+                        </td>
+                        <td class="centered"><a href="#" onclick="generateFor('http://iot.linkeddata.es/def/wot-mappings/ontology.xml')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="http://delta.linkeddata.es/def/core/index-en.html">EU Project DELTA, core ontology</a></td>
+                        <td><span class="label label-primary">rdf/xml</span> <span class="label label-primary">turtle</span> <span class="label label-primary">json-ld</span> <span class="label label-primary">n-triples</span></td>
+                        <td><a href="https://w3id.org/def/openadr">DELTA OpenADR</a></td>
+                        <td class="centered"><a href="#" onclick="generateFor('http://delta.linkeddata.es/def/core/ontology.ttl')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://w3id.org/def/openadr">OpenADR</a></td>
+                        <td><span class="label label-primary">rdf/xml</span> <span class="label label-primary">turtle</span> <span class="label label-primary">json-ld</span> <span class="label label-primary">n-triples</span></td>
+                        <td>-</td>
+                        <td class="centered"><a href="#" onclick="generateFor('https://albaizq.github.io/OpenADRontology/OnToology/ontology/openADRontology.owl/documentation/ontology.ttl')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td><a href="https://www.w3.org/TR/vocab-ssn/">SSN</a></td>
+                        <td><span class="label label-primary">turtle</span></td>
+                        <td><a href="http://www.w3.org/ns/sosa/">SOSA</a></td>
+                        <td class="centered"><a href="#" onclick="generateFor('http://www.w3.org/ns/ssn/')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
+                    </tr>
+
+                    <tr>
+                        <td><a href="https://git.onem2m.org/MAS/BaseOntology/blob/master/base_ontology.owl">oneM2M</a></td>
+                        <td><span class="label label-primary">turtle</span></td>
+                        <td>-</td>
+                        <td class="centered"><a href="#" onclick="generateFor('https://git.onem2m.org/MAS/BaseOntology/raw/master/base_ontology.owl')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
+                    </tr>
+
+                    <!--<tr>
+                      <td><a href="http://schema.org/version/latest/schema.nt">Schema</a></td>
+                      <td><span class="label label-primary">nt</span></td>
+                      <td>-</td>
+                      <td class="centered"><a href="#" onclick="generateFor('http://schema.org/version/latest/schema.nt')"><span class="glyphicon  glyphicon-download-alt"></span></a></td>
+                    </tr>-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+        <!-- Modal -->
+        <div class="modal fade" id="modalLoading" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="loader">Loading...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <br>
 
@@ -161,10 +182,19 @@
 <footer class="footer container">
     <hr/>
     <div class="row">
-        <div class="col-md-2">
-            <a href="http://www.oeg-upm.net/" target="_blank"><img src="static/logos/oeg/oeg.png" alt="OEG logo" class="img-rounded img-responsive"></a>
+        <div class="col-md-5">
+            <a href="http://www.oeg-upm.net/" target="_blank"><img src="static/logos/oeg/oeg.png" alt="OEG logo"
+                                                                   class="img-rounded" class="img-responsive"
+                                                                   width="20%"/></a>
+
+            <a href="http://fi.upm.es/" target="_blank"><img src="static/logos/upm/fiLogo.png" alt="FI logo"
+                                                             class="img-rounded" class="img-responsive"
+                                                             width="20%"/></a>
+
+            <a href="https://www.upm.es/" target="_blank"><img src="static/logos/upm/upmlogo.png" alt="UPM logo"
+                                                               class="img-rounded" class="img-responsive" width="20%"/></a>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-7">
             Alba Fernández Izquierdo, Andrea Cimmino Arriaga, and Raúl García Castro
             <br>
             Contact email: albafernandez@fi.upm.es, cimmino@fi.upm.es, or rgarcia@fi.upm.es
@@ -177,58 +207,10 @@
             Latest revision November, 2019
             <br><p>© Ontology Engineering Group</p>
         </div>
-        
+
     </div>
 </footer>
 
-    <script type="text/javascript">
-        var ontologyFileContent = "";
-        var format = "";
-        document.getElementById('upload').addEventListener('change', readFileAsString)
-        function readFileAsString() {
-            hideAlerts();
-            var files = this.files;
-            if (files.length === 0) {
-                console.log('No file is selected');
-                return;
-            }
-
-            var reader = new FileReader();
-            reader.onload = function(event) {
-                ontologyFileContent = event.target.result;
-            };
-            format = files[0].name;
-            if(format.endsWith(".ttl")){
-                format="Turtle";
-            }else if(format.endsWith(".nt")){
-                format="N-Triples";
-            }else if(format.endsWith(".nq")){
-                format="N-Quads";
-            }else if(format.endsWith(".trig")){
-                format="TriG";
-            }else if(format.endsWith(".rdf")){
-                format="RDF/XML";
-            }else if(format.endsWith(".owl")){
-                format="RDF/XML";
-            }else if(format.endsWith(".jsonld")){
-                format="JSON-LD";
-            }else if(format.endsWith(".trdf")){
-                format="RDF Thrift";
-            }else if(format.endsWith(".rt")){
-                format="RDF Thrift";
-            }else if(format.endsWith(".rj")){
-                format="RDF/JSON";
-            }else if(format.endsWith(".trix")){
-                format="TriX";
-            } else {
-                $('#alert-error-format').css("display", "block");
-                ontologyFileContent = "";
-                format = "";
-            }
-            if(format.length>0)
-                reader.readAsText(files[0]);
-        }
-    </script>
 
 </body>
 </html>
