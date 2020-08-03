@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.riot.RiotException;
 import org.apache.jena.vocabulary.OWL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +29,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import oeg.validation.astrea.service.exceptions.SyntaxOntologyException;
 import oeg.validation.astrea.service.model.Endpoints;
 import oeg.validation.astrea.service.model.OntologyDocument;
 import oeg.validation.astrea.service.service.AstreaService;
@@ -52,22 +54,29 @@ public class GenerationAPI extends AbstractController{
 	    })
 	@RequestMapping(value = "/api/shacl/url", method = RequestMethod.POST, produces = {"text/rdf+turtle", "text/turtle"}, consumes= {"application/json"}) 
 	@ResponseBody
-	public String shapesFromOwlURL(@ApiParam(value = "A json document with ontology URLs and their formats.", required = true ) @Valid @RequestBody(required = true) Endpoints ontologyURLs, HttpServletResponse response) {
+	public String shapesFromOwlURL(@ApiParam(value = "A json document with ontology URLs and their formats.", required = true ) @Valid @RequestBody(required = true) Endpoints ontologyURLs, HttpServletResponse response) throws Exception {
 		prepareResponse(response);
 		log.info("Requested: "+ontologyURLs.getOntologies());
+		String shapes = null;
+		try {
 			Model ontologies = loadOntologies(ontologyURLs.getOntologies(), response);
 			List<String> additionalOntologyURLs = ontologies.listObjectsOfProperty(OWL.imports).toList().stream().map(url -> url.toString()).collect(Collectors.toList());
 			Model importedOntologies = loadOntologies(additionalOntologyURLs, response);
 			ontologies.add(importedOntologies);
-			Model shapes = astreaService.generateShacl(ontologies);		
+			Model shapesAux = astreaService.generateShacl(ontologies);	
 			System.out.println(">"+response.getStatus());
-			if(shapes.isEmpty()) {
+			if(shapesAux.isEmpty()) {
 				response.setStatus( HttpServletResponse.SC_PARTIAL_CONTENT);
-				shapes=null;
+				shapes = modelToString(shapesAux);
 				log.severe("shapes produced are empty");
 			}
+		}catch(SyntaxOntologyException e) {
+			shapes = e.getMessage();
+		}catch(Exception e) {
+			log.severe(e.toString());
+		}
 		log.info("Requested solved.");
-		return modelToString(shapes);
+		return shapes;
 	}
 	
 	
@@ -80,7 +89,7 @@ public class GenerationAPI extends AbstractController{
 	@ResponseBody
 	public String shapesFromOwlContent(@ApiParam( value = "A json specifying the ontology document and its format", required = true ) @Valid @RequestBody(required = true) OntologyDocument ontology, HttpServletResponse response, HttpServletRequest request) {
 		prepareResponse(response);
-		Model shapes =  ModelFactory.createDefaultModel();
+		String shapes =  null;
 		log.info("Requested ontology content ");
 		Model ontologyModel = ModelFactory.createDefaultModel();
 		try {
@@ -89,17 +98,19 @@ public class GenerationAPI extends AbstractController{
 			List<String> additionalOntologyURLs = ontologyModel.listObjectsOfProperty(OWL.imports).toList().stream().map(url -> url.toString()).collect(Collectors.toList());
 			Model importedOntologies = loadOntologies(additionalOntologyURLs, response);
 			ontologyModel.add(importedOntologies);
-			shapes = astreaService.generateShacl(ontologyModel);		
-			if(shapes.isEmpty()) {
+			Model shapesAux = astreaService.generateShacl(ontologyModel);		
+			if(shapesAux.isEmpty()) {
 				response.setStatus( HttpServletResponse.SC_BAD_REQUEST );
-				shapes=null;
+				shapes = modelToString(shapesAux);
 				log.severe("shapes produced are empty");
 			}
 			log.info("Requested solved.");
-		}catch(Exception e) {
+		}catch(RiotException e) {
+			shapes = e.toString();
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		return modelToString(shapes);
+		return shapes;
 	}
 	
 
@@ -140,7 +151,7 @@ public class GenerationAPI extends AbstractController{
 		return content;
 	}
 	
-	private Model loadOntologies(List<String> ontologyURLs, HttpServletResponse response) {
+	private Model loadOntologies(List<String> ontologyURLs, HttpServletResponse response) throws Exception {
 		Model ontology = ModelFactory.createDefaultModel();
 		response.setStatus( HttpServletResponse.SC_OK );
 		if(ontologyURLs!=null && !ontologyURLs.isEmpty()) {
@@ -156,6 +167,9 @@ public class GenerationAPI extends AbstractController{
 					}
 					if(!ontologyTemporal.isEmpty())
 						ontology.add(ontologyTemporal);
+				}catch(RiotException e) {
+					response.setStatus( HttpServletResponse.SC_PARTIAL_CONTENT );
+					throw new SyntaxOntologyException(e.toString());
 				}catch(Exception e) {
 					response.setStatus( HttpServletResponse.SC_PARTIAL_CONTENT );
 					log.severe(e.toString());
