@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>oeg.validation</groupId>
 	<artifactId>astrea-service</artifactId>
-	<version>2.0.1</version>
+	<version>2.1.0</version>
 	<name>astrea-service</name>
 	<description>Validation service that uses the Astrea library</description>
 
@@ -55,6 +55,12 @@
 		    <groupId>org.eclipse.rdf4j</groupId>
 		    <artifactId>rdf4j-rio-api</artifactId>
 		    <version>3.2.3</version>
+		</dependency>
+	<!-- Tuples -->
+		<dependency>
+		    <groupId>org.javatuples</groupId>
+		    <artifactId>javatuples</artifactId>
+		    <version>1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

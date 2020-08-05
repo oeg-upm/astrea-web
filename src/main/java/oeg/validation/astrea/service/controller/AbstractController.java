@@ -7,7 +7,7 @@ public abstract class AbstractController {
 	
 	protected void prepareResponse(HttpServletResponse response) {
 		response.setHeader("Server", "Astrea Service"); // Server type is hidden
-		response.setStatus( HttpServletResponse.SC_BAD_REQUEST ); // by default response code is BAD
+		response.setStatus( HttpServletResponse.SC_OK ); // by default response code is OK
 	}	
 	
 	
