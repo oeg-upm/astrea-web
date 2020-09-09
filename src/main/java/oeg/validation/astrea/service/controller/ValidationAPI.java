@@ -13,9 +13,10 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.shacl.ShaclValidator;
 import org.apache.jena.shacl.Shapes;
-import org.apache.jena.vocabulary.DC_11;
 import org.apache.jena.vocabulary.RDF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +31,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import oeg.validation.astrea.service.model.ValidationDocument;
+import oeg.validation.astrea.service.model.ValidationURLDocument;
 import oeg.validation.astrea.service.service.AstreaService;
 
 @RestController
@@ -68,6 +70,36 @@ public class ValidationAPI extends AbstractController{
 		return modelToString(report);
 	}
 	
+	@ApiOperation(value = "Validate RDF data online using a Shape document online")
+	@ApiResponses(value = {
+	        @ApiResponse(code = 200, message = "Validation performed correctly"),
+	        @ApiResponse(code = 400, message = "Bad request")
+	    })
+	@RequestMapping(value = "/api/validation/url", method = RequestMethod.POST, produces = {"text/rdf+turtle", "text/turtle"}, consumes= {"application/json"}) 
+	@ResponseBody
+	public String validationWithShapeFile(@ApiParam(value = "A document with a URL pointing to RDF data, a URL pointing to a Shape document, and the format used by both (it can be any of these: Turtle, RDF/XML, N-Triples, JSON-LD, RDF/JSON, TriG, N-Quads, TriX)", required = true ) @Valid @RequestBody(required = true) ValidationURLDocument document, HttpServletResponse response, HttpServletRequest request) {
+		prepareResponse(response);
+		Model report =  ModelFactory.createDefaultModel();
+		log.info("Requested ontology content ");
+		try {
+			Model data = createModelFromURL(document.getDataURL(), document.getDataFormat());
+			Model shape = createModelFromURL(document.getShapeURL(), document.getShapeFormat());
+			if(data.isEmpty() || shape.isEmpty()) {
+				response.setStatus(400);
+			}else {
+				Shapes shapes = Shapes.parse(shape);
+				report = ShaclValidator.get().validate(shapes.getGraph(), data.getGraph()).getModel();
+				if(document.getCoverage()) {
+					typesNotContainedInShape(data, shape, report);
+				}
+				response.setStatus(200);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		log.info("Requested solved.");
+		return modelToString(report);
+	}
 	
 	public Model createModel(String rdf, String format) {
 		Model model = ModelFactory.createDefaultModel();
@@ -76,11 +108,17 @@ public class ValidationAPI extends AbstractController{
 		return model;
 	}
 	
+	public Model createModelFromURL(String url, String format) {
+		Model model = ModelFactory.createDefaultModel();
+		model.read(url, null, format);  // jsonDocument.get("format")
+		return model;
+	}
+	
 	private String modelToString(Model model) {
 		String content = null;
 		if(model!=null) {
 			Writer output = new StringWriter();
-			model.write(output, "TURTLE");
+			model.write(output, "TTL");
 			content = output.toString();
 		}
 		return content;
@@ -88,10 +126,21 @@ public class ValidationAPI extends AbstractController{
 	
 	private void typesNotContainedInShape(Model data, Model shapes, Model report){
 		NodeIterator iterator = data.listObjectsOfProperty(RDF.type);
+		
+		report.listSubjectsWithProperty(RDF.type, ResourceFactory.createResource("http://www.w3.org/ns/shacl#ValidationReport"))
+		.toList()
+		.forEach(elem -> report.add(elem, RDF.type, ResourceFactory.createResource("http://astrea.linkeddata.es/ontology#ValidationReport")));
+		
 		while(iterator.hasNext()) {
 			RDFNode type = iterator.next();
 			if(shapes.contains(null, null, type)) {
-				report.add(report.createResource(), DC_11.coverage, type);
+				report.listSubjectsWithProperty(RDF.type, ResourceFactory.createResource("http://www.w3.org/ns/shacl#ValidationReport"))
+				.toList()
+				.forEach(elem -> report.add(elem, ResourceFactory.createProperty("https://w3id.org/def/astrea#covers"), type));
+			}else {
+				report.listSubjectsWithProperty(RDF.type, ResourceFactory.createResource("http://www.w3.org/ns/shacl#ValidationReport"))
+				.toList()
+				.forEach(elem -> report.add(elem, ResourceFactory.createProperty("https://w3id.org/def/astrea#isAbsentTerm"), type));
 			}
 		}
 		

@@ -7,12 +7,16 @@ import io.swagger.annotations.ApiModelProperty;
 public class OntologyDocument {
 
 	
+
+	
 	@ApiModelProperty(notes = "An ontology document.", required = true, position = 0, example="@prefix : <http://www.w3.org/2006/time#> .\n" + 
 			"@prefix owl: <http://www.w3.org/2002/07/owl#> .\n" + 
 			"@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n" + 
 			"@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n" + 
 			"@prefix skos: <http://www.w3.org/2004/02/skos/core#> .\n" + 
-			"\n" + 
+			"\n"
+			+ "<http://www.w3.org/2006/time> rdf:type owl:Ontology .\n"
+			+ "\n" + 
 			":DateTimeInterval\n" + 
 			"  rdf:type owl:Class ;\n" + 
 			"  rdfs:comment \"DateTimeInterval is a subclass of ProperInterval, defined using the multi-element DateTimeDescription.\"@en ;\n" + 
