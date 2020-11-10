@@ -8,7 +8,7 @@ In order to deploy the Astrea-web service users have two options:
 version: '2'
 services:
   astrea-service:
-    image: acimmino/astrea-service:2.1.0
+    image: acimmino/astrea-service:2.1.2
     ports:
     - 8080:8080
 ``````
