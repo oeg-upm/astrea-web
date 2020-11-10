@@ -102,7 +102,6 @@ public class GenerationAPI extends AbstractController{
 		log.info("Requested ontology content");
 		
 		try {
-			System.out.println(">>>>"+ontology.getSerialisation());
 			Pair<Model,Model> ontologies = loadOntologiesFromContent(ontology.getOntology(),  ontology.getSerialisation());
 			shapes.add(astreaService.generateShacl(ontologies.getValue0()));	
 			shapes.add(ontologies.getValue1());
