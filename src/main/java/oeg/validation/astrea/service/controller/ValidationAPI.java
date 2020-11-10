@@ -1,5 +1,7 @@
 package oeg.validation.astrea.service.controller;
 
+import static org.assertj.core.api.Assertions.assertThatIOException;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -17,6 +19,7 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.shacl.ShaclValidator;
 import org.apache.jena.shacl.Shapes;
+import org.apache.jena.shacl.lib.ShLib;
 import org.apache.jena.vocabulary.RDF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.topbraid.shacl.validation.ValidationUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -57,7 +61,8 @@ public class ValidationAPI extends AbstractController{
 			Model data = createModel(document.getData(), document.getDataFormat());
 			Model shape = createModel(document.getShape(), document.getShapeFormat());
 			Shapes shapes = Shapes.parse(shape);
-			report = ShaclValidator.get().validate(shapes.getGraph(), data.getGraph()).getModel();
+			report = validate(shapes,  data);
+			
 			if(document.getCoverage()) {
 				typesNotContainedInShape(data, shape, report);
 				report.setNsPrefix("dc", "http://purl.org/dc/elements/1.1/");
@@ -88,7 +93,7 @@ public class ValidationAPI extends AbstractController{
 				response.setStatus(400);
 			}else {
 				Shapes shapes = Shapes.parse(shape);
-				report = ShaclValidator.get().validate(shapes.getGraph(), data.getGraph()).getModel();
+				report = validate( shapes, data);
 				if(document.getCoverage()) {
 					typesNotContainedInShape(data, shape, report);
 				}
@@ -112,6 +117,12 @@ public class ValidationAPI extends AbstractController{
 		Model model = ModelFactory.createDefaultModel();
 		model.read(url, null, format);  // jsonDocument.get("format")
 		return model;
+	}
+	
+	private Model validate(Shapes shapes, Model data) {
+		Model report = ShaclValidator.get().validate(shapes, data.getGraph()).getModel();
+		report.write(System.out);
+		return report;
 	}
 	
 	private String modelToString(Model model) {

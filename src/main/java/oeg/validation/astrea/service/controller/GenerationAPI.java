@@ -2,12 +2,16 @@ package oeg.validation.astrea.service.controller;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +22,8 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
+import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.NodeIterator;
@@ -25,6 +31,8 @@ import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.riot.Lang;
+import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDF;
 import org.javatuples.Pair;
@@ -94,6 +102,7 @@ public class GenerationAPI extends AbstractController{
 		log.info("Requested ontology content");
 		
 		try {
+			System.out.println(">>>>"+ontology.getSerialisation());
 			Pair<Model,Model> ontologies = loadOntologiesFromContent(ontology.getOntology(),  ontology.getSerialisation());
 			shapes.add(astreaService.generateShacl(ontologies.getValue0()));	
 			shapes.add(ontologies.getValue1());
@@ -189,14 +198,37 @@ public class GenerationAPI extends AbstractController{
 	private Pair<Model,Model> loadOntologiesFromContent(String ontology, String lang) {
 		Model ontologyModel = ModelFactory.createDefaultModel();	
 		Model report = ModelFactory.createDefaultModel();
+		
 		String capturedLog = captureStdOut(() -> {
 			try {
-				InputStream is = new ByteArrayInputStream(ontology.getBytes() );
-				ontologyModel.read(is, null, lang);
+				if(lang.toLowerCase().contains("quads") || lang.toLowerCase().contains("quads") ) {
+					// In case of crashing due to concurrency at this point, add the datetime to the file name
+					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");  
+					LocalDateTime now = LocalDateTime.now();  
+					String tmpFileName = "./onto"+ontology.hashCode()+" - "+dtf.format(now)+".nq";
+					File file = new File(tmpFileName);
+					tmpFileName = file.getAbsolutePath();
+					file.createNewFile();
+					FileWriter myWriter = new FileWriter(tmpFileName);
+				    myWriter.write(ontology);
+				    myWriter.close();
+					Dataset dataset = RDFDataMgr.loadDataset("file://"+tmpFileName, Lang.NQUADS);
+					dataset.listNames().forEachRemaining(elem -> System.out.println(elem));
+					ontologyModel.add(dataset.getUnionModel());
+					file.delete();
+					
+				}else {
+					InputStream is = new ByteArrayInputStream(ontology.getBytes() );
+					ontologyModel.read(is, null, lang);
+				}
+				
+				
 			}catch(Exception e) {
 				// empty
+				e.printStackTrace();
 			}
 		});
+		
 		if(ontologyModel.contains(null, RDF.type, OWL.Ontology)) {
 			report.add(buildReportDetailed("http://astrea.linkeddata.es/ontology#provided_ontology", capturedLog, ontologyModel.isEmpty(), false));
 			List<String> additionalOntologyURLs = ontologyModel.listObjectsOfProperty(OWL.imports).toList().stream().map(url -> url.toString()).collect(Collectors.toList());
