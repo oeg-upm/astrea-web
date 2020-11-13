@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -40,8 +41,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -114,6 +117,34 @@ public class GenerationAPI extends AbstractController{
 		return modelToString(shapes);
 	}
 	
+	@ApiOperation(value = "Build SHACL shapes from a posted ontology file (max file size 250MB), supported formats: Turtle, RDF/XML, N-Triples, JSON-LD, RDF/JSON, TriG, N-Quads, TriX.")
+	@ApiResponses(value = {
+	        @ApiResponse(code = 200, message = "Shapes successfully built"),
+	        @ApiResponse(code = 206, message = "There was an error processing one of the ontology formats from the URLs provided, some partial results could be output"),
+	        @ApiResponse(code = 400, message = "Bad request")
+	    })
+	@RequestMapping(value = "/api/shacl/file", method = RequestMethod.POST, consumes = {"multipart/form-data"}, produces = {"text/rdf+turtle", "text/turtle"})
+	@ResponseBody
+	public String shapesFromOwlFile(@ApiParam(value="A multipart/form-data file containing an ontology")  @Valid @RequestParam("file") MultipartFile multipart, @ApiParam(value = "Supported formats: Turtle, RDF/XML, N-Triples, JSON-LD, RDF/JSON, TriG, N-Quads, TriX") @Valid @RequestParam("format") String format, HttpServletResponse response) {
+		prepareResponse(response);
+		Model shapes =  ModelFactory.createDefaultModel();
+		log.info("Requested ontology content");
+		try {
+			
+		    String ontology =  IOUtils.toString(multipart.getInputStream(), StandardCharsets.UTF_8);
+			Pair<Model,Model> ontologies = loadOntologiesFromContent(ontology,  format);
+
+			shapes.add(astreaService.generateShacl(ontologies.getValue0()));	
+			shapes.add(ontologies.getValue1());
+			response.setStatus(compileResponseStatus(ontologies.getValue1()));
+			shapes =  wrapShapes(shapes);
+		} catch (Exception e) {
+			log.severe(e.toString());
+		}
+		
+	   return modelToString(shapes);
+	}
+	
 	private Model wrapShapes(Model shapes) {
 		Model wrappedShapes = ModelFactory.createDefaultModel();
 		wrappedShapes.add(shapes);
@@ -158,7 +189,7 @@ public class GenerationAPI extends AbstractController{
 				error++;
 		}
 		
-		if(partial > 1 || (ok>0 && error>0)) {
+		if(partial >= 1 || (ok>0 && error>0)) {
 			return 206;
 		}else if(partial==0 && error==0 && ok >0) {
 			return 200;
@@ -223,13 +254,17 @@ public class GenerationAPI extends AbstractController{
 				
 				
 			}catch(Exception e) {
-				// empty
 				e.printStackTrace();
 			}
 		});
 		
 		if(ontologyModel.contains(null, RDF.type, OWL.Ontology)) {
-			report.add(buildReportDetailed("http://astrea.linkeddata.es/ontology#provided_ontology", capturedLog, ontologyModel.isEmpty(), false));
+			String defaultUrl = "http://astrea.linkeddata.es/ontology#provided_ontology";
+			if(capturedLog.startsWith("http") && !capturedLog.contains("apache.jena.riot")) {
+				defaultUrl = capturedLog;
+				capturedLog = "";
+			}
+			report.add(buildReportDetailed(defaultUrl, capturedLog, ontologyModel.isEmpty(), false));
 			List<String> additionalOntologyURLs = ontologyModel.listObjectsOfProperty(OWL.imports).toList().stream().map(url -> url.toString()).collect(Collectors.toList());
 			Pair<Model, Model> ontologiesAux = loadOntologies(additionalOntologyURLs);
 			ontologyModel.add(ontologiesAux.getValue0());
