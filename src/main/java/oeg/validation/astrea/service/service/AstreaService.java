@@ -11,7 +11,7 @@ public class AstreaService {
 	private OwlGenerator shaclGenerator;
 	
 	public AstreaService() {
-		shaclGenerator = new OwlGenerator();
+		shaclGenerator = new OwlGenerator("https://graphdb.linkeddata.es/repositories/astrea");
 	}
 	
 	public Model generateShacl(String ontologyURL) {

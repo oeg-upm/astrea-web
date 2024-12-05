@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <title>Astrea Shapes Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="languaje" content="English">
+
+
+    <!-- JS -->
+    <script src="/static/js/jquery/jquery.min.js"></script>
+    <script src="/static/js/bootstrap/bootstrap.min.js"></script>
+   
+    <!-- CSS  -->
+ 	  <link rel="stylesheet" href="/static/css/astrea.css">
+    <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="/static/css/jquery/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- custom js for main-->
+    <script src="/static/js/astrea.js"></script>
+
+</head>
+
+<body>
+
+<!-- Static navbar -->
+<nav class="navbar navbar-default ">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"> <img src="static/logos/astrea.svg" class="img-responsive" width="30" height="30" alt="" style="margin-top:-10px"></a><!-- Source of the logo: https://commons.wikimedia.org/wiki/File:5_Astraea_Symbol.svg-->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="index.html">Main</a></li>
+                <li><a href="/swagger-ui.html">API REST</a></li>
+                <li><a href="catalogue.html">Shapes catalogue</a></li>
+                <li><a href="material.html">Material</a></li>
+                <li class="active"><a href="ontology.html">Ontology</a></li>
+                <li><a href="https://github.com/oeg-upm/Astrea" class="navbar-brand pull-sm-right m-r-0"><i class="fa fa-github"></i> Github</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>
+
+
+
+
+<main role="main">
+
+    <div class="container" >
+        <!-- Header section -->
+        <div class="row">
+            <div class="col-md-12">
+                <h2> <a href="https://w3id.org/def/astrea">Ontology developed to express the Astrea mappings</a></h2>
+            </div>
+            <div class="col-md-12">
+                <h4 class="checkout-step-title" style="font-weight: normal;">The Astrea-KG, either the online <a href="https://astrea.helio.linkeddata.es/">KG</a> or the <a href="https://doi.org/10.5281/zenodo.3571009">Zenodo</a>, contains and publishes the information of the 157 mappings developed. A <a href="https://w3id.org/def/astrea">vocabulary to model these mappings has been defined</a>. Figure 1 shows an overview of such vocabulary, which models the relation between the mappings between ontology and SHACL construct patterns, and the mappings implementation as SPARQL queries. 
+                </h4>
+                <br>
+                <figure style="text-align: center">
+                   <img src="/static/img/onto.jpg" style="width:50%"/>
+                  <figcaption>Figure 1 - Ontology developed to express the Astrea mappings.</figcaption>
+                </figure>
+               <br>
+                <h4 class="checkout-step-title" style="font-weight: normal;">As depicted in Figure 1,two <strong>Patterns</strong> can be mapped by each other, which indicates that they are equivalent. Any of these pattern could be an <strong>OntologyPattern</strong>, if the pattern includes statements that contain any construct from OWL, RDFs, or XSD. Alternatively a pattern may be a <strong>SHACLPattern</strong>, if it includes statements that contain SHACL constructs. A <strong>Pattern</strong> can be mapped by other <strong>Pattern</strong>, and this relation is symmetric. Furthermore, each <strong>Pattern</strong> is related to a <strong>MappingImplementation</strong> which contains the necessary information to translate this source pattern to the equivalent target pattern.</h4>
+                <br>
+                <h4 class="checkout-step-title" style="font-weight: normal;">An example of mapping is depicted in Figure 2. It can be observed that the  <strong>OntologyPattern</strong>  is capturing the <i>cardinality</i> pattern when is specified as an <i>owl:Restriction</i> for an <i>owl:Class</i>. Similarly, the <strong>SHACLPattern</strong>  refers to a <i>sh:PropertyShape</i> related to a <i>sh:NodeShape</i>, which has a <i>sh:minCount</i> and <i>sh:maxCount</i>. These two patterns are related by means of the <strong>isMappedBy</strong> relation, which indicates that the <strong>OntologyPattern</strong> is mapped by the <strong>SHACLPattern</strong> and vice versa.
+                </h4>
+                <br>
+                <figure style="text-align: center">
+                   <img src="/static/img/example.jpg" style="width:75%"/>
+                  <figcaption>Figure 2 - Exmaple of mapping expressed with this ontology.</figcaption>
+                </figure>
+                <br>
+                <h4 class="checkout-step-title" style="font-weight: normal;">Finally, in order to generate a shape the <strong>OntologyPattern</strong>  is related to a <strong>MappingImplementation</strong> instance that implements such translation by means of a SPARQL query; notice that the WHERE clause encodes the ontology contruct pattern and the CONTRUCT the SHACL contruct pattern.
+                </h4>
+
+
+            </div>
+        </div>
+    
+
+    </div>
+    <br>
+
+</main>
+<footer class="footer container">
+    <hr/>
+    <div class="row">
+        <div class="col-md-2">
+            <a href="http://www.oeg-upm.net/" target="_blank"><img src="static/logos/oeg/oeg.png" alt="OEG logo" class="img-rounded img-responsive"></a>
+        </div>
+        <div class="col-md-10">
+            Alba Fernández Izquierdo, Andrea Cimmino Arriaga, and Raúl García Castro
+            <br>
+            Contact email: albafernandez@fi.upm.es, cimmino@fi.upm.es, or rgarcia@fi.upm.es
+            <br>
+            <a href="/material.html">Licensing</a>
+            <br>
+            Built with <a target="_blank" href="http://getbootstrap.com/">Bootstrap</a>
+            Icons from <a target="_blank" href="http://glyphicons.com/">Glyphicons</a>
+            <br>
+            Latest revision November, 2019
+            <br><p>© Ontology Engineering Group</p>
+        </div>
+        
+    </div>
+</footer>
+
+
+</body>
+</html>
