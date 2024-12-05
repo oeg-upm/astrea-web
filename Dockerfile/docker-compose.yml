@@ -1,0 +1,6 @@
+version: '2'
+services:
+  astrea-service:
+    image: acimmino/astrea-service-indexed:2.2.1
+    ports:
+    - 8080:8080
